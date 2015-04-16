@@ -1,17 +1,19 @@
 <?php
 
-class Weapon extends Licorne
+class Weapon
 {
-	private $_posX;
-	private $_posY;
-	private $_charge;
-	private $_orientation;
-	private $_model;
+	private						$_posX;
+	private						$_posY;
+	private						$_charge;
+	private						$_orientation;
+	private						$_model;
+
 	public static function		doc()
 	{
 		return (file_get_contents('./Weapon.doc.txt'));
 	}
-	public static function __construct(array $kwargs)
+
+	public static function		__construct(array $kwargs)
 	{
 		if (isset($kwargs['posX'])
 			&& isset($kwargs['posY'])
@@ -27,7 +29,8 @@ class Weapon extends Licorne
 		}
 		return ;
 	}
-	public static function __destruct(array $kwargs)
+
+	public static function		__destruct(array $kwargs)
 	{
 		return ;
 	}

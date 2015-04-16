@@ -2,18 +2,20 @@
 
 class WeaponModel
 {
-	private $_name;
-	private $_short_range;
-	private $_medium_range;
-	private $_long_range;
-	private $_dispersion;
-	private $_width;
-	private $_default_charge;
+	private						$_name;
+	private						$_short_range;
+	private						$_medium_range;
+	private						$_long_range;
+	private						$_dispersion;
+	private						$_width;
+	private						$_default_charge;
+
 	public static function		doc()
 	{
 		return (file_get_contents('./WeaponModel.doc.txt'));
 	}
-	public static function __construct(array $kwargs)
+
+	public static function		__construct(array $kwargs)
 	{
 		if (isset($kwargs['name']) 
 			&& isset($kwargs['short_range']) 
@@ -33,7 +35,8 @@ class WeaponModel
 		}
 		return ;
 	}
-	public static function __destruct()
+
+	public static function		__destruct()
 	{
 		return ;
 	}
