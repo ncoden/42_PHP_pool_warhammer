@@ -1,11 +1,12 @@
 <?php
 
+require_once('Licorne.class.php');
+
 class Ship extends Licorne
 {
+	private						$_id;
 	private						$_model;
 	private						$_owner;
-	private						$_posX;
-	private						$_posY;
 	private						$_orientation;
 	private						$_moving;
 	private						$_pp;
@@ -20,7 +21,8 @@ class Ship extends Licorne
 
 	public function				__construct(array $kwargs)
 	{
-		if (isset($kwargs['model'])
+		if (&& isset($kwargs['id'])
+			&& isset($kwargs['model'])
 			&& isset($kwargs['owner'])
 			&& isset($kwargs['posX'])
 			&& isset($kwargs['posY'])
@@ -31,10 +33,10 @@ class Ship extends Licorne
 			&& isset($kwargs['shield'])
 			&& isset($kwargs['weapons']))
 		{
+			$this->_id = $kwargs['id'];
 			$this->_model = Game::getShipModel($kwargs['model']);
 			$this->_owner = $kwargs['owner'];
-			$this->_posX = intval($kwargs['posX']);
-			$this->_posY = intval($kwargs['posY']);
+			$this->setPos(intval($kwargs['posX']), intval($kwargs['posY']));
 			$this->_orientation = intval($kwargs['orientation']);
 			$this->_moving = intval($kwargs['moving']);
 			$this->_pp = intval($kwargs['pp']);
