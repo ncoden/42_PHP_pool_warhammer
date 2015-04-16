@@ -9,32 +9,27 @@ class Dice
 		return (file_get_contents('Dice.doc.txt'));
 	}
 
-	public function				__construct()
-	{
-
-	}
-
-	static public function		toss()
+	public static function		toss()
 	{
  		$roll = rand(1, self::DICE_MAX);
  		return $roll;
 	}
 
-	static public function		multi_toss($numtoss = 0)
+	public static function		multi_toss($numtoss = 0)
 	{
 		$arr = array();
-		if (is_int ($numthrow) && $numthrow > 0)
+		if (is_int($numtoss) && $numtoss > 0)
 		{
-			while ($numthrow > 0)
+			while ($numtoss > 0)
 			{
-				$arr[] = rand(1, self::DICE_MAX);
-				$numthrow--;
+				array_push($arr, rand(1, self::DICE_MAX));
+				$numtoss--;
 			}
 		}
 		return $arr;
 	}
 
-	static public function		min_toss($min = 0, $n = 0)
+	public static function		min_toss($min = 0, $n = 0)
 	{
 		if (is_int($min) && is_int($n) && ($min <= self::DICE_MAX))
 			while ($n > 0)
