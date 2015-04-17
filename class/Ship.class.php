@@ -8,6 +8,7 @@ class Ship extends Licorne
 	const						STATE_KILLED = 2;
 
 	private						$_id;
+	private						$_round;
 	private						$_model;
 	private						$_owner;
 	private						$_orientation;
@@ -26,6 +27,7 @@ class Ship extends Licorne
 	public function				__construct(array $kwargs)
 	{
 		if (isset($kwargs['id'])
+			&& isset($kwargs['round'])
 			&& isset($kwargs['model'])
 			&& isset($kwargs['owner'])
 			&& isset($kwargs['posX'])
@@ -39,7 +41,8 @@ class Ship extends Licorne
 			&& isset($kwargs['weapons']))
 		{
 			$this->_id = $kwargs['id'];
-			$this->_model = Game::getShipModel($kwargs['model']);
+			$this->_round = intval($kwargs['round']);
+			$this->_model = InstanceManager::getShipModel($kwargs['model']);
 			$this->_owner = $kwargs['owner'];
 			$this->setPos(intval($kwargs['posX']), intval($kwargs['posY']));
 			$this->_orientation = intval($kwargs['orientation']);
@@ -51,7 +54,7 @@ class Ship extends Licorne
 
 			$this->_weapons = array();
 			foreach ($kwargs['weapons'] as $weapon)
-				$this->_weapons[$weapon] = Game::getWeapon($weapon);
+				$this->_weapons[$weapon] = InstanceManager::getWeapon($weapon);
 		}
 	}
 

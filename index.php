@@ -4,8 +4,9 @@ $g_page_defaut = 'home';
 $g_page_nofound = '404';
 
 $g_pages = [
-	'home' =>		['',			'pages/home.php'],
-	'404' =>		['404',			'pages/404.php'],
+	'api' =>		['api/*',		'pages/api.php',	FALSE],
+	'home' =>		['',			'pages/home.php', 	TRUE],
+	'404' =>		['404',			'pages/404.php', 	TRUE],
 ];
 
 // ----- INIT -----
@@ -37,7 +38,8 @@ if (isset($_GET['path']) && $_GET['path'] != '')
 
 $g_page_datas = array_combine([
 	'match',
-	'file'
+	'file',
+	'header'
 ], $g_pages[$g_page]);
 
 
@@ -56,11 +58,13 @@ else
 
 header('Content-Type: text/html; charset=utf-8');
 
-include('pages/header.php');
+if ($g_page_datas['header'])
+	include('pages/header.php');
 
 if (file_exists($g_page_datas['file']))
 	include($g_page_datas['file']);
 
-include('pages/footer.php');
+if ($g_page_datas['header'])
+	include('pages/footer.php');
 
 ?>
