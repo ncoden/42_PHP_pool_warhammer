@@ -72,8 +72,10 @@ abstract class Licorne
 						$this->inflictDamages($this->_hull);
 						if ($ymin + $yi < 0)
 							$this->_posY = 0;
-						if ($ymax + $yi > 100)
+						else if ($ymax + $yi > 100)
 							$this->_posY = 100;
+						else
+							$this->_posY = $ymin + $yi - 1;
 					}
 				}
 
@@ -81,16 +83,25 @@ abstract class Licorne
 				{
 					if (checkCollision($xmin, $ymin + $yi, $xmax, $ymax + $yi, $value) == TRUE)
 					{
-						$this->inflictDamages($this->_hull);
+						$this->inflictDamages($value->_hull);
 						if ($ymin + $yi < 0)
 							$this->_posY = 0;
-						if ($ymax + $yi > 100)
+						else if ($ymax + $yi > 100)
 							$this->_posY = 100;
+						else
+							$this->_posY = $ymin + $yi - 1;
 					}
 				}
 				if ($stop == 1)
+				{
+					DataBase::update('ships', $this->_id, array(
+						'posX' => $this->_posX,
+						'posY' => $this->_posY
+					);
 					break;
+				}
 			}
+
 			return ;
 		}
 
@@ -104,31 +115,42 @@ abstract class Licorne
 				{
 					if (checkCollision($xmin + $xi, $ymin, $xmax + $xi, $ymax, $value) == TRUE)
 					{
-						$value->inflictDamages($value->_hull);
-						$this->inflictDamages($this->_hull);
+						$value->inflictDamages($this->_hull);
+						$this->inflictDamages($value->_hull);
 						$stop = 1;
 					}
 					if ($xmin + $xi < 0)
 						$this->_posX = 0;
-					if ($xmax + $xi > 100)
-						$this->_posY = 100;
+					else if ($xmax + $xi > 100)
+						$this->_posX = 100;
+					else
+						$this->_posX = $xmin + $xi - 1;
 				}
 
 				foreach($map['Elements'] as $key => $value)
 				{
 					if (checkCollision($xmin + $xi, $ymin, $xmax + $xi, $ymax, $value) == TRUE)
 					{
-						$this->inflictDamages($this->_hull);
+						$this->inflictDamages($value->_hull);
 						$stop = 1;
 					}
 					if ($xmin + $xi < 0)
 						$this->_posX = 0;
-					if ($xmax + $xi > 100)
+					else if ($xmax + $xi > 100)
 						$this->_posX = 100;
+					else
+						$this->_posX = $xmin + $xi - 1;
 				}
 				if ($stop == 1)
+				{
+					DataBase::update('ships', $this->_id, array(
+						'posX' => $this->_posX,
+						'posY' => $this->_posY
+					);
 					break;
+				}
 			}
+			EventManager::trigger('ship_moved', $this->_id);
 			return ;
 		}
 	}

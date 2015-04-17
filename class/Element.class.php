@@ -45,6 +45,17 @@ class Element
 		return $this->_type;
 	}
 
+	public function				set_type($type)
+	{
+		$this->_type = $type;
+	}
+
+	public function				set_dimensions($width, $height)
+	{
+		$this->_width = $width;
+		$this->_height = $height;
+	}
+
 	public function				get_posX()
 	{
 		return $this->_posX;
