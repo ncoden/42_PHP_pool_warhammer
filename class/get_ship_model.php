@@ -42,28 +42,28 @@ class buildShipModel
 
 	public function __construct($ship_model)
 	{
-		$this->$_id = $ship_model['id'];
-		$this->$_name = $ship_model['name'];
-		$this->$_width = $ship_model['width'];
-		$this->$_height = $ship_model['height'];
-		$this->$_sprite = $ship_model['sprite'];
-		$this->$_defaultPp = $ship_model['defaultPp'];
-		$this->$_defaultHull = $ship_model['defaultHull'];
-		$this->$_defaultShield = $ship_model['defaultShield'];
-		$this->$_inertia = $ship_model['inertia'];
-		$this->$_speed = $ship_model['speed'];
-		$this->$_category = $ship_model['category'];
+		$this->_id = $ship_model['id'];
+		$this->_name = $ship_model['name'];
+		$this->_width = $ship_model['width'];
+		$this->_height = $ship_model['height'];
+		$this->_sprite = $ship_model['sprite'];
+		$this->_defaultPp = $ship_model['defaultPp'];
+		$this->_defaultHull = $ship_model['defaultHull'];
+		$this->_defaultShield = $ship_model['defaultShield'];
+		$this->_inertia = $ship_model['inertia'];
+		$this->_speed = $ship_model['speed'];
+		$this->_category = $ship_model['category'];
 	}
 }
 
 class niquetamerephp {
 
-static $_array_ships_models = array();
+public static $_array_ships_models = array();
 
 	static public function getShipModels($id, $conn)
 	{
-		global $_array_ships_models;
-		foreach ($_array_ships_models as $key => $obj)
+		//global $_array_ships_models;
+		foreach (self::$_array_ships_models as $key => $obj)
 		{
 			if ($obj->id == $id)
 			{
@@ -76,7 +76,9 @@ static $_array_ships_models = array();
 		if ($result->num_rows > 0) {
 		    // output data of each row
 		    while($row = $result->fetch_assoc()) {
-				$obj = new buildShipModel($row);	
+				$obj = new buildShipModel($row);
+				array_push(self::$_array_ships_models, $obj);
+				return ($obj);
 		    }
 		} else {
 		    echo "0 results";
@@ -85,5 +87,9 @@ static $_array_ships_models = array();
 }
 $conn = init_connec::init();
 niquetamerephp::getShipModels(1, $conn);
+
+
+
+
 ?>
 </body>
