@@ -42,7 +42,7 @@ class Ship extends Licorne
 		{
 			$this->_id = $kwargs['id'];
 			$this->_round = intval($kwargs['round']);
-			$this->_model = Game::getShipModel($kwargs['model']);
+			$this->_model = InstanceManager::getShipModel($kwargs['model']);
 			$this->_owner = $kwargs['owner'];
 			$this->setPos(intval($kwargs['posX']), intval($kwargs['posY']));
 			$this->_orientation = intval($kwargs['orientation']);
@@ -54,7 +54,7 @@ class Ship extends Licorne
 
 			$this->_weapons = array();
 			foreach ($kwargs['weapons'] as $weapon)
-				$this->_weapons[$weapon] = Game::getWeapon($weapon);
+				$this->_weapons[$weapon] = InstanceManager::getWeapon($weapon);
 		}
 	}
 
