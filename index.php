@@ -10,6 +10,7 @@ $g_pages = [
 
 // ----- INIT -----
 
+require('functions.php');
 require('class/DataBase.class.php');
 
 DataBase::init( array(
