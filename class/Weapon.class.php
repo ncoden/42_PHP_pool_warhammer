@@ -34,6 +34,16 @@ class Weapon
 	{
 		return ;
 	}
+
+	public function				setCharge($tocharge)
+	{
+		$this->_charge = $tocharge;
+	}
+
+	public function				getCharge()
+	{
+		return ($this->_charge);
+	}
 }
 
 ?>
