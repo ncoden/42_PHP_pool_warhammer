@@ -21,7 +21,7 @@ class Ship extends Licorne
 
 	public function				__construct(array $kwargs)
 	{
-		if (&& isset($kwargs['id'])
+		if (isset($kwargs['id'])
 			&& isset($kwargs['model'])
 			&& isset($kwargs['owner'])
 			&& isset($kwargs['posX'])
