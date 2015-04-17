@@ -2,18 +2,18 @@
 
 Abstract Class EventManager
 {
-	public static function trigger($event_to_add, $id)
+	public static function trigger($event, $data)
 	{
-		DataBase::insert('events', $id);
-		return ;
+		return (DataBase::insert('events', array(
+			'name' => $event,
+			'data' => $data 
+		)));
 	}
 	
 	public static function check()
 	{
-		if (($ret = DataBase::select('SELECT * FROM events WHERE `timestamp` > "'.$NOW().'"')) == NULL)
-			return (NULL);
-		else
-			return ($ret);
+		$ret = DataBase::req('SELECT * FROM `events` WHERE `timestamp` > NOW()');
+		return ($ret);
 	}
 }
 
