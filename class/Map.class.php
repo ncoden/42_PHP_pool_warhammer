@@ -1,7 +1,7 @@
 <?php
 require_once('Element.class.php');
 
-class Game
+class Map
 {
 	/*All below values need to be stored inside the SQL Server. Please read documentation for this class for further info*/
 	private static	$_map_id;
@@ -25,7 +25,7 @@ class Game
 
 	public static function		doc()
 	{
-		return (file_get_contents('Game.doc.txt'));
+		return (file_get_contents('Map.doc.txt'));
 	}
 
 	function					__construct()
