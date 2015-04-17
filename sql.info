@@ -1,8 +1,0 @@
-/** The name of the database */
-define('DB_NAME', 'onzedesimod1');
-/** MySQL database username */
-define('DB_USER', 'onzedesimod1');
-/** MySQL database password */
-define('DB_PASSWORD', 'Hh7PnfDmR3Sm');
-/** MySQL hostname */
-define('DB_HOST', 'mysql51-109.perso');
