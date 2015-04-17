@@ -8,9 +8,11 @@ abstract class Licorne
 	private						$_posY;
 
 	public static function		doc()
+	{
 		return (file_get_contents('./Licorne.doc.txt'));
+	}
 
-	public function checkCollision($xmin, $ymin, $xmax, $ymax, $obj)
+	public function			checkCollision($xmin, $ymin, $xmax, $ymax, $obj)
 	{
 		if ($xmin < 0 || $xmax > 150)
 			return FALSE;
@@ -45,7 +47,7 @@ abstract class Licorne
 		}
 	}
 
-	private function			moveTo($x, $y)
+	public function				moveTo($x, $y)
 	{
 		$xmin = $this->_posX;
 		$ymin = $this->_posY;
