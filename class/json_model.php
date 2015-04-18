@@ -22,7 +22,7 @@ $array = array (
 			"posY" => 25,
 			"width" => 2,
 			"height" => 3,
-			)
+			),
 		),
 	"players" => array (
 		array(
@@ -71,7 +71,7 @@ $array = array (
 			"charge" => 0,
 			"posX" => 10,
 			"posY" => 30,
-			"rotation" => 90
+			"rotation" => 90,
 			),
 		),
 	"weaponModels" => array(
@@ -82,7 +82,7 @@ $array = array (
 			"MediumRange" => 20,
 			"LongRange" => 30,
 			"dispersion" => 0,
-			"width" => 1
+			"width" => 1,
 			),
 		),
 	"shipModels" => array(
@@ -99,7 +99,7 @@ $array = array (
 			"speed" => 5,
 			),
 		),
-	"events" = array(
+	"events" => array(
 		array(
 			"name" => "ship_moved",
 			"datas" => array(
@@ -115,7 +115,6 @@ $array = array (
 			"datas" => array(
 					"shipId" => 10,
 					"damages" => 9,
-				),
 			),
 		),
 		array(
@@ -125,10 +124,9 @@ $array = array (
 					"ships" => array(3, 4, 5),
 					"weapons" => array(14, 35, 56, 78, 90),
 				),
-			),
 		),
 		array(
-			"name" => "game_end"
+			"name" => "game_end",
 			"datas" => array(
 					"winnerId" => 56,
 				),
