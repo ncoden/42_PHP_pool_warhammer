@@ -6,16 +6,13 @@
 
 \f0\fs72 \cf0 SESSION \'91user\'92\
 \
-FORM : /game/create\
- => /api/game/create\
+FORM : /game/create redirect -> /game(ID)\
+ (call on server /api/game/create)\
  -> name\
- <- gameId\
- <- shipModels (not to be used on the client side)\
- <- elements\
- <- weaponModels (not to be used on the client side)\
+ <- gameId (written in the page)\
 \
 /game/(ID)\
- => /api/game/load\
+ (client call /api/game/load)\
  -> gameId\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
 \cf0  <- players\

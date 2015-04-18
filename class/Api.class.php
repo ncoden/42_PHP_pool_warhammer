@@ -9,7 +9,7 @@ class Api
 
 	private function		checkPlayerRight($userId = NULL)
 	{
-		$game = Database::req('SELECT * FROM `games` WHERE `id`=? ');
+		$game = InstanceManager::
 
 	}
 
@@ -27,6 +27,7 @@ class Api
 			return(call_user_func('self::'.$methods[$request], $datas))
 		return (FALSE);
 	}
+
 }
 
 ?>
