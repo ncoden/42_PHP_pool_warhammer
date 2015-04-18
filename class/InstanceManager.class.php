@@ -77,20 +77,52 @@ abstract class InstanceManager
 		if (!isset(self::$_instances['weapons'][$id]))
 		{
 			$weapon = DataBase::select('weapons', $id);
-			$_instances['weapons'][$id] = new Ship(array(
+			$_instances['weapons'][$id] = new Weapon(array(
 				'id' => $id,
-				'name' => $shipModel['name'],
-				'width' => $shipModel['width'],
-				'height' => $shipModel['height'],
-				'sprite' => $shipModel['sprite'],
-				'default_pp' => $shipModel['defaultPp'],
-				'default_hull' => $shipModel['defaultHull'],
-				'default_shiel' => $shipModel['defaultShield'],
-				'inerty' => $shipModel['inertia'],
-				'speed' => $shipModel['speed'],
+				'model' => $weapon['idWeaponModel'],
+				'charge' => $weapon['charge']
 			));
 		}
-		return ($_instances['shipModels'][$id]);
+		return ($_instances['weapons'][$id]);
+	}
+
+	public static function	getWeaponModel($id)
+	{
+		if (!isset(self::$_instances['weapons'][$id]))
+		{
+			$weaponModel = DataBase::select('weaponsmodel', $id);
+			$_instances['weaponModels'][$id] = new WeaponModel(array(
+				'id' => $id,
+				'name' => $weaponModel['name'],
+				'short_range' => $weaponModel['shortRange'],
+				'medium_range' => $weaponModel['mediumRange'],
+				'long_range' => $weaponModel['longRange'],
+				'charge_default' => $weaponModel['defaultCharge'],
+				'dispersion' => $weaponModel['dispersion'],
+				'width' => $weaponModel['width'])
+			));
+		}
+		return ($_instances['weaponModels'][$id]);
+	}
+
+	public static function getGame($id)
+	{
+		if (!isset(self::$_instances['games'][$id]))
+		{
+			$game = DataBase::select('games', $id);
+			$_instances['games'][$id] = new Game(array(
+				'id' => $id,
+				'timestamp' => $game['timestamp'],
+				'winnerId' => $game['winnerId'],
+				'state' => $game['state'],
+				'playerTurn' => $game['playerTurn'],
+				'mapId' => $game['mapId'],
+				'bigTurn' => $game['bigTurn'],
+				'smallTurn' => $game['smallTurn']
+
+			));
+		}
+		return ($_instances['games'][$id]);
 	}
 }
 

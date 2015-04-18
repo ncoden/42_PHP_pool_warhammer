@@ -16,8 +16,16 @@ class Api
 	public function			request($request, $datas)
 	{
 		$methods = [
-			'game/start',
+			'game/create' => 'GameCreate',
+			'game/load' => 'GameLoad',
+			'game/refresh' => 'GameRefresh',
+			'ship/move' => 'ShipMove',
+			'ship/fire' => 'ShipFire',
 		]
+
+		if (isset($methods[$request]))
+			return(call_user_func('self::'.$methods[$request], $datas))
+		return (FALSE);
 	}
 }
 
