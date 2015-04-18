@@ -132,9 +132,16 @@ class Ship extends Licorne
 
 	public function				kill()
 	{
-		EventManager::trigger('ship_killed', $this->_id);
+		// get the game
+		$gameId = $this->_player->getGame();
+		$game = InstanceManager::getGame($gameId);
+
+		// kill the ship
 		DataBase::update('ships', $this->_id, array('state' => self::STATE_KILLED));
 		$this->_state = self::STATE_KILLED;
+
+		// send the event
+		EventManager::trigger($gameId, 'ship_killed', $this->_id);
 	}
 }
 
