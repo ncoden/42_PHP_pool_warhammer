@@ -6,13 +6,16 @@ abstract class InstanceManager
 
 	public static function	init()
 	{
-		$_instances = [
-			'games'				=> [],
-			'ships'				=> [],
-			'shipModels'		=> [],
-			'weapons'			=> [],
-			'weaponModels'		=> []
-		]
+		if (!isset($_instances))
+		{
+			$_instances = [
+				'games'				=> [],
+				'ships'				=> [],
+				'shipModels'		=> [],
+				'weapons'			=> [],
+				'weaponModels'		=> []
+			];
+		}
 	}
 
 	public static function	getShip($id)
@@ -99,7 +102,7 @@ abstract class InstanceManager
 				'long_range' => $weaponModel['longRange'],
 				'charge_default' => $weaponModel['defaultCharge'],
 				'dispersion' => $weaponModel['dispersion'],
-				'width' => $weaponModel['width'])
+				'width' => $weaponModel['width']
 			));
 		}
 		return ($_instances['weaponModels'][$id]);

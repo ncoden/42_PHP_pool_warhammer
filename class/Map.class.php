@@ -1,5 +1,6 @@
 <?php
-require_once('Element.class.php');
+
+require_once('class/Element.class.php');
 
 class Map
 {
@@ -32,7 +33,6 @@ class Map
 	{
 		$this->_map_width = 150; 
 		$this->_map_height = 100; 
-		$this->_map_id = 0;
 		$this->_map_p1_zone_posX = 0;
 		$this->_map_p1_zone_posY = 0;
 		$this->_map_p2_zone_posX = 119;
@@ -55,7 +55,7 @@ class Map
 
 	}
 
-	public function				GenerateMap()
+	public function				GenerateMap($mapId)
 	{
 		$element_id = 0;
 		$this->_map_elements = array();
@@ -95,23 +95,25 @@ class Map
 						$w1 = 1;
 						$w2 = 1;
 					}
-				$current_element = new Element(array(
-					'id' => $element_id,
-					'type' => $element_type,
-					'posX' => $i,
-					'posY' => $j,
-					'width' => $this->_map_tile_width * $w1,
-					'height' => $this->_map_tile_height * $w2,
-					'map_id' => ($this->_map_id)
+				if ($element_type == $this->_element_types['asteroid'])
+				{
+					DataBase::insert('elements', array(
+						'type' => $element_type,
+						'x' => $i,
+						'y' => $j,
+						'width' => $this->_map_tile_width * $w1,
+						'height' => $this->_map_tile_height * $w2,
+						'mapId' => $mapId
 					));
-				$element_id++;
-				$map_elements_y[$j] = $current_element;
+
+					$element_id++;
+					//$map_elements_y[$j] = $current_element;
+				}
 
 			}
-			$this->_map_elements[$i] = $map_elements_y;
+			//$this->_map_elements[$i] = $map_elements_y;
 		}
-		$this->_map_id++;
-		$this->CheckOccupied();
+		//$this->CheckOccupied();
 	}
 
 	private function			CheckOccupied()
@@ -231,10 +233,10 @@ class Map
 		}
 	}
 
-	public static function		SaveMapInDatabase($theMap)
-	{
+	// public static function		SaveMapInDatabase($theMap)
+	// {
 
-	}
+	// }
 }
 
 ?>

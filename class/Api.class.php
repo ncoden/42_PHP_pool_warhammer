@@ -1,6 +1,7 @@
 <?php
 
 require_once('class/Game.class.php');
+require_once('class/InstanceManager.class.php');
 
 class Api
 {
@@ -35,12 +36,15 @@ class Api
 			return (FALSE);
 		$gameId = $datas['id'];
 
-		$game			= InstanceManager::getGame($gameId);
-		$players		= InstanceManager::getAllPlayers($gameId);
-		$ship			= InstanceManager::getAllShip($gameId);
-		$shipModels 	= InstanceManager::getAllShipModels($gameId);
-		$weapons		= InstanceManager::getAllWeapons($gameId);
-		$weaponModels	= InstanceManager::getAllWeaponModels($gameId);
+		return (array(
+			'game'			=> InstanceManager::getGame($gameId),
+			'elements'		=> InstanceManager::getAllElements($gameId),
+			'players'		=> InstanceManager::getAllPlayers($gameId),
+			'ship'			=> InstanceManager::getAllShip($gameId),
+			'shipModels' 	=> InstanceManager::getAllShipModels($gameId),
+			'weapons'		=> InstanceManager::getAllWeapons($gameId),
+			'weaponModels'	=> InstanceManager::getAllWeaponModels($gameId)
+		));
 	}
 
 	public function			request($request, array $datas)

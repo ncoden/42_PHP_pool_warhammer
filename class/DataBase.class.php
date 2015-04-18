@@ -48,9 +48,9 @@ abstract class DataBase
 			return (FALSE);
 	}
 
-	public static function		select($table, $id, $values)
+	public static function		select($table, $id, $values = NULL)
 	{
-		if (is_array($args1)
+		if (is_array($values)
 		&& $db = DataBase::connect())
 		{
 			// build the req
