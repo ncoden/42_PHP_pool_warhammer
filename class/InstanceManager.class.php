@@ -124,6 +124,38 @@ abstract class InstanceManager
 		}
 		return ($_instances['games'][$id]);
 	}
+
+	public static function getAllShips($gameId)
+	{
+		$allShips = DataBase::req('SELECT * FROM `ships`
+			INNER JOIN `players` ON `ships`.`playerID` = `players`.`id`
+			INNER JOIN `weapons` ON `ships`.`id` = `weapons`.`shipId`
+			WHERE `players`.`gameId` = ?', array($gameId));
+
+		$tabShips = array();
+		foreach ($allShips as $key => $value)
+		{
+			$weaponsIds = array();
+			foreach ($value[`id`] as $weapon)
+				array_push($weaponsIds, $weapon[`id`]);
+			$ship = new Ship(array(
+				'id' => ,
+				'model' => $value['idShipModel'],
+				'player' => $value['playerID'],
+				'posX' => $value['posX'],
+				'posY' => $value['posY'],
+				'orientation' => $value['orientation'],
+				'moving' => $value['moving'],
+				'pp' => $value['pp'],
+				'speed' => $value['speed'],
+				'hull' => $value['hull'],
+				'shield' => $value['shield'],
+				'weapons' => $weaponIds
+			));
+			array_push($tabShips, $ship);
+		}
+		return ($tabShips);
+	}
 }
 
 ?>
