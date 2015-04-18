@@ -104,6 +104,26 @@ abstract class InstanceManager
 		}
 		return ($_instances['weaponModels'][$id]);
 	}
+
+	public static function getGame($id)
+	{
+		if (!isset(self::$_instances['games'][$id]))
+		{
+			$game = DataBase::select('games', $id);
+			$_instances['games'][$id] = new Game(array(
+				'id' => $id,
+				'timestamp' => $game['timestamp'],
+				'winnerId' => $game['winnerId'],
+				'state' => $game['state'],
+				'playerTurn' => $game['playerTurn'],
+				'mapId' => $game['mapId'],
+				'bigTurn' => $game['bigTurn'],
+				'smallTurn' => $game['smallTurn']
+
+			));
+		}
+		return ($_instances['games'][$id]);
+	}
 }
 
 ?>
