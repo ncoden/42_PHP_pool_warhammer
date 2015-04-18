@@ -6,6 +6,8 @@ abstract class Licorne
 	private						$_moving;
 	private						$_posX;
 	private						$_posY;
+	private						$_height;
+	private						$_width;
 
 	public static function		doc()
 	{

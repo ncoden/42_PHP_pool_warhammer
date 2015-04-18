@@ -29,7 +29,7 @@ abstract class InstanceManager
 			$_instances['ships'][$id] = new Ship(array(
 				'id' => $id,
 				'model' => $ship['idShipModel'],
-				'owner' => $ship['playerID'],
+				'player' => $ship['playerID'],
 				'posX' => $ship['posX'],
 				'posY' => $ship['posY'],
 				'orientation' => $ship['orientation'],

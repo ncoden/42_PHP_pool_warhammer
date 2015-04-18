@@ -10,7 +10,7 @@ class Ship extends Licorne
 	private						$_id;
 	private						$_round;
 	private						$_model;
-	private						$_owner;
+	private						$_player;
 	private						$_orientation;
 	private						$_moving;
 	private						$_pp;
@@ -29,7 +29,7 @@ class Ship extends Licorne
 		if (isset($kwargs['id'])
 			&& isset($kwargs['round'])
 			&& isset($kwargs['model'])
-			&& isset($kwargs['owner'])
+			&& isset($kwargs['player'])
 			&& isset($kwargs['posX'])
 			&& isset($kwargs['posY'])
 			&& isset($kwargs['orientation'])
@@ -43,7 +43,7 @@ class Ship extends Licorne
 			$this->_id = $kwargs['id'];
 			$this->_round = intval($kwargs['round']);
 			$this->_model = InstanceManager::getShipModel($kwargs['model']);
-			$this->_owner = $kwargs['owner'];
+			$this->_player = $kwargs['player'];
 			$this->setPos(intval($kwargs['posX']), intval($kwargs['posY']));
 			$this->_orientation = intval($kwargs['orientation']);
 			$this->_moving = intval($kwargs['moving']);
