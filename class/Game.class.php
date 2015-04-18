@@ -16,19 +16,19 @@ class Game
 		$map->GenerateMap();
 
 		DataBase::insert('maps', array(
-			"width" => 150,
-			"height" => 100,
-			"state" => 0
+			'width' => 150,
+			'height' => 100,
+			'state' => 0
 		));
 
 		$lastIdMap = Database::getLastEntry('games'); // trouver dans la database le dernier element inserer
 		DataBase::insert('games', array(
-			"map_id" => $lastIdMap,
-			"winnerId" => 0,
-			"state" => 0,
-			"playerTurn" => 0,
-			"bigTurn" => 0,
-			"smallTurn" => 0
+			'map_id' => $lastIdMap,
+			'winnerId' => 0,
+			'state' => 0,
+			'playerTurn' => 0,
+			'bigTurn' => 0,
+			'smallTurn' => 0
 		));
 	}
 
