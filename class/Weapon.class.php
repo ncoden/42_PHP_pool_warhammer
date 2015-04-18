@@ -21,7 +21,7 @@ class Weapon
 			&& isset($kwargs['orientation'])
 			&& isset($kwargs['model'])
 		{
-			$this->_model = InstanceManager::getWeaponModel($kwargs['model']);
+			$this->_model = intval($kwargs['model']);
 			$this->_posY = intval($kwargs['posY']);
 			$this->_posX = intval($kwargs['posX']);
 			$this->_orientation = intval($kwargs['orientation']);

@@ -42,8 +42,8 @@ class Ship extends Licorne
 		{
 			$this->_id = $kwargs['id'];
 			$this->_round = intval($kwargs['round']);
-			$this->_model = InstanceManager::getShipModel($kwargs['model']);
-			$this->_player = $kwargs['player'];
+			$this->_model = intval($kwargs['model']);
+			$this->_player = intval($kwargs['player']);
 			$this->setPos(intval($kwargs['posX']), intval($kwargs['posY']));
 			$this->_orientation = intval($kwargs['orientation']);
 			$this->_moving = intval($kwargs['moving']);
@@ -51,10 +51,7 @@ class Ship extends Licorne
 			$this->_speed = intval($kwargs['speed']);
 			$this->_hull = intval($kwargs['hull']);
 			$this->_shield = intval($kwargs['shield']);
-
-			$this->_weapons = array();
-			foreach ($kwargs['weapons'] as $weapon)
-				$this->_weapons[$weapon] = InstanceManager::getWeapon($weapon);
+			$this->_weapons = $kwargs['weapons'];
 		}
 	}
 
@@ -88,9 +85,13 @@ class Ship extends Licorne
 			{
 				foreach ($kwargs['weapons'] as $id => $weapon_point)
 				{
-					$charge = $this->_weapons[$id]->getCharge() + $weapon_point;
-					$this->_weapons[$id]->setCharge($charge);
-					DataBase::update('weapons', $id, array('charge' => $charge));
+					if (in_array($id, $this->_weapons))
+					{
+						$weapon = InstanceManager::getWeapon($id);
+						$charge = $weapon->getCharge() + $weapon_point;
+						$weapon->setCharge($charge);
+						DataBase::update('weapons', $id, array('charge' => $charge));
+					}
 				}
 			}
 
