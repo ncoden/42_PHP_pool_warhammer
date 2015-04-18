@@ -2,23 +2,22 @@
 
 class Api
 {
-	public function __construct()
+	public function			__construct()
 	{
 
 	}
 
-	private function checkPlayerRight($userId = NULL)
+	private function		checkPlayerRight($userId = NULL)
 	{
 		$game = Database::req('SELECT * FROM `games` WHERE `id`=? ');
 
 	}
 
-	public function			request($userId = NULL)
+	public function			request($request, $datas)
 	{
-		if (isset($userId) && $userId == $_SESSION['user'])
-		{
-
-		}
+		$methods = [
+			'game/start',
+		]
 	}
 }
 
