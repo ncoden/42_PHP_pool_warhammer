@@ -1,6 +1,6 @@
 <?php
 
-class DataBase
+abstract class DataBase
 {
 	private	static				$_db;
 	private	static				$_server;
@@ -26,7 +26,7 @@ class DataBase
 			);
 		}
 		if (self::$_db)
-			return (self::$_db)
+			return (self::$_db);
 		else
 			return (FALSE);
 	}
@@ -38,10 +38,10 @@ class DataBase
 			&& isset($kwargs['username'])
 			&& isset($kwargs['password']))
 		{
-			$this->_server = $kwargs['server'];
-			$this->_server = $kwargs['name'];
-			$this->_server = $kwargs['username'];
-			$this->_server = $kwargs['password'];
+			self::$_server = $kwargs['server'];
+			self::$_server = $kwargs['name'];
+			self::$_server = $kwargs['username'];
+			self::$_server = $kwargs['password'];
 			return (TRUE);
 		}
 		else

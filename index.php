@@ -4,9 +4,11 @@ $g_page_defaut = 'home';
 $g_page_nofound = '404';
 
 $g_pages = [
-	'api' =>		['api/*',		'pages/api.php',	FALSE],
-	'home' =>		['',			'pages/home.php', 	TRUE],
-	'404' =>		['404',			'pages/404.php', 	TRUE],
+	'api' =>			['api/*',		'pages/api.php',			FALSE],
+	'home' =>			['',			'pages/home.php',		 	TRUE],
+	'game_create' =>	['game/create',	'pages/game_create.php',	TRUE],
+	'game_load' =>		['game/*',		'pages/game_load.php',		TRUE],
+	'404' =>			['404',			'pages/404.php',			TRUE],
 ];
 
 // ----- INIT -----

@@ -13,6 +13,20 @@ class Api
 
 	}
 
+	private function 		isPlayerLogged()
+	{
+		if (isset($_SESSION['id']))
+			return (1);
+		return(0);
+	}
+
+	public function 		GameCreate(array $datas)
+	{
+		if (isset($datas['name']))
+			return(Game::gameCreate($datas['name']));
+		return (FALSE);
+	}
+
 	public function			request($request, $datas)
 	{
 		$methods = [
