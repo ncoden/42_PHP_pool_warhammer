@@ -1,10 +1,10 @@
 <?php
 
+require_once('class/Licorne.class.php');
 
 class Element extends Licorne
 {
 	private						$_id; 
-	private						$_map;
 	private						$_type;
 
 	public function				__construct(array $kwargs)
@@ -15,7 +15,6 @@ class Element extends Licorne
 		$this->_posY = $kwargs['posY'];
 		$this->_width = $kwargs['width'];
 		$this->_height = $kwargs['height'];
-		$this->_map = $wargs['map'];
 	}
 
 	public function				get_id()

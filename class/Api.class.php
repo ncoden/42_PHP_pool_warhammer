@@ -1,5 +1,7 @@
 <?php
 
+require_once('class/Game.class.php');
+
 class Api
 {
 	public function			__construct()
@@ -9,7 +11,7 @@ class Api
 
 	private function		checkPlayerRight($userId = NULL)
 	{
-		$game = InstanceManager::
+		//$game = InstanceManager::
 
 	}
 
@@ -20,25 +22,39 @@ class Api
 		return(0);
 	}
 
-	public function 		GameCreate(array $datas)
+	public function 		gameCreate(array $datas)
 	{
 		if (isset($datas['name']))
-			return(Game::gameCreate($datas['name']));
+			return(Game::create($datas['name']));
 		return (FALSE);
 	}
 
-	public function			request($request, $datas)
+	public function			gameLoad(array $datas)
+	{
+		if (!isset($datas['id']))
+			return (FALSE);
+		$gameId = $datas['id'];
+
+		$game			= InstanceManager::getGame($gameId);
+		$players		= InstanceManager::getAllPlayers($gameId);
+		$ship			= InstanceManager::getAllShip($gameId);
+		$shipModels 	= InstanceManager::getAllShipModels($gameId);
+		$weapons		= InstanceManager::getAllWeapons($gameId);
+		$weaponModels	= InstanceManager::getAllWeaponModels($gameId);
+	}
+
+	public function			request($request, array $datas)
 	{
 		$methods = [
-			'game/create' => 'GameCreate',
-			'game/load' => 'GameLoad',
-			'game/refresh' => 'GameRefresh',
-			'ship/move' => 'ShipMove',
-			'ship/fire' => 'ShipFire',
+			'game/create' => 'gameCreate',
+			'game/load' => 'gameLoad',
+			'game/refresh' => 'gameRefresh',
+			'ship/move' => 'shipMove',
+			'ship/fire' => 'shipFire',
 		];
 
 		if (isset($methods[$request]))
-			return(call_user_func('$this->'.$methods[$request], $datas))
+			return(call_user_func('$this->'.$methods[$request], $datas));
 		return (FALSE);
 	}
 

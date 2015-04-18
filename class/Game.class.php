@@ -1,5 +1,7 @@
 <?php
 
+require_once('class/Map.class.php');
+
 class Game
 {
 	private						$_gameId;
@@ -10,7 +12,7 @@ class Game
 	private						$_bigTurn;
 	private						$_smallTurn;
 
-	public static				create()
+	public static function		create()
 	{
 		$map = new Map();
 		$map->GenerateMap();
@@ -21,15 +23,18 @@ class Game
 			'state' => 0
 		));
 
-		$lastIdMap = Database::getLastEntry('games'); // trouver dans la database le dernier element inserer
+		$lastIdMap = Database::getLastEntry('maps'); // trouver dans la database le dernier element inserer
 		DataBase::insert('games', array(
-			'map_id' => $lastIdMap,
+			'mapId' => $lastIdMap,
 			'winnerId' => 0,
 			'state' => 0,
 			'playerTurn' => 0,
 			'bigTurn' => 0,
 			'smallTurn' => 0
 		));
+
+		$lastIdGame = Database::getLastEntry('games');
+		return ($lastIdGame);
 	}
 
 	public function				__construct(array $kwargs)
