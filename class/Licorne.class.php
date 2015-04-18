@@ -1,5 +1,7 @@
 <?php
 
+require_once('class/EventManager.class.php');
+
 abstract class Licorne
 {
 	private static				$_map;
@@ -99,7 +101,7 @@ abstract class Licorne
 					DataBase::update('ships', $this->_id, array(
 						'posX' => $this->_posX,
 						'posY' => $this->_posY
-					);
+					));
 					break;
 				}
 			}
@@ -148,7 +150,7 @@ abstract class Licorne
 					DataBase::update('ships', $this->_id, array(
 						'posX' => $this->_posX,
 						'posY' => $this->_posY
-					);
+					));
 					break;
 				}
 			}
@@ -156,6 +158,9 @@ abstract class Licorne
 			return ;
 		}
 	}
+
+	public function 			getWidth() { return ($this->_width);}
+	public function 			getHeight() { return ($this->_height);}
 }
 
 ?>

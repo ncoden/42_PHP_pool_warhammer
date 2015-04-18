@@ -2,14 +2,14 @@
 
 if (isset($_POST['gameName']))
 {
+	require_once('class/Api.class.php');
+
 	$api = new Api();
-	$gameId = $api->GameCreate(array(
+	$gameId = $api->gameCreate(array(
 		'name' => $_POST['gameName'],
 	));
 	header('Location: /game/'.$gameId);
 }
-else
-	header('Location: /');
 
 ?>
 <form action = "/game/create" method = "POST">

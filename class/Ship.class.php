@@ -1,6 +1,6 @@
 <?php
 
-require_once('Licorne.class.php');
+require_once('class/Licorne.class.php');
 
 class Ship extends Licorne
 {

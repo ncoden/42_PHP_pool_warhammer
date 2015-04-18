@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.40)
 # Database: rush01
-# Generation Time: 2015-04-16 15:43:22 +0000
+# Generation Time: 2015-04-18 15:55:00 +0000
 # ************************************************************
 
 
@@ -38,6 +38,21 @@ CREATE TABLE `elements` (
 
 
 
+# Dump of table events
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `events`;
+
+CREATE TABLE `events` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `gameId` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `data` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Dump of table games
 # ------------------------------------------------------------
 
@@ -45,15 +60,26 @@ DROP TABLE IF EXISTS `games`;
 
 CREATE TABLE `games` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `gameId` int(12) DEFAULT NULL,
   `timestamp` int(12) DEFAULT NULL,
   `winnerId` int(12) DEFAULT NULL,
   `state` int(12) NOT NULL DEFAULT '0',
   `playerTurn` int(12) DEFAULT NULL,
   `mapId` int(11) DEFAULT NULL,
+  `bigTurn` int(11) DEFAULT NULL,
+  `smallTurn` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `games` WRITE;
+/*!40000 ALTER TABLE `games` DISABLE KEYS */;
+
+INSERT INTO `games` (`id`, `timestamp`, `winnerId`, `state`, `playerTurn`, `mapId`, `bigTurn`, `smallTurn`)
+VALUES
+	(1,NULL,0,0,0,31,0,0),
+	(2,NULL,0,0,0,32,0,0);
+
+/*!40000 ALTER TABLE `games` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table maps
@@ -69,6 +95,46 @@ CREATE TABLE `maps` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `maps` WRITE;
+/*!40000 ALTER TABLE `maps` DISABLE KEYS */;
+
+INSERT INTO `maps` (`id`, `width`, `height`, `state`)
+VALUES
+	(1,150,100,0),
+	(2,150,100,0),
+	(3,150,100,0),
+	(4,150,100,0),
+	(5,150,100,0),
+	(6,150,100,0),
+	(7,150,100,0),
+	(8,150,100,0),
+	(9,150,100,0),
+	(10,150,100,0),
+	(11,150,100,0),
+	(12,150,100,0),
+	(13,150,100,0),
+	(14,150,100,0),
+	(15,150,100,0),
+	(16,150,100,0),
+	(17,150,100,0),
+	(18,150,100,0),
+	(19,150,100,0),
+	(20,150,100,0),
+	(21,150,100,0),
+	(22,150,100,0),
+	(23,150,100,0),
+	(24,150,100,0),
+	(25,150,100,0),
+	(26,150,100,0),
+	(27,150,100,0),
+	(28,150,100,0),
+	(29,150,100,0),
+	(30,150,100,0),
+	(31,150,100,0),
+	(32,150,100,0);
+
+/*!40000 ALTER TABLE `maps` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table players
@@ -116,6 +182,9 @@ CREATE TABLE `ships` (
   `pp` int(11) DEFAULT '0',
   `hull` int(11) DEFAULT '0',
   `shield` int(11) DEFAULT '0',
+  `state` int(11) DEFAULT '1',
+  `speed` int(11) DEFAULT NULL,
+  `bigTurn` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -139,7 +208,7 @@ CREATE TABLE `shipsmodel` (
   `speed` int(12) DEFAULT '0',
   `category` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `shipsmodel` WRITE;
 /*!40000 ALTER TABLE `shipsmodel` DISABLE KEYS */;
@@ -183,10 +252,8 @@ DROP TABLE IF EXISTS `weapons`;
 CREATE TABLE `weapons` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idWeaponsModel` int(11) DEFAULT NULL,
-  `posX` int(12) DEFAULT NULL,
-  `posY` int(12) DEFAULT NULL,
   `charge` int(12) DEFAULT '0',
-  `orientation` int(12) DEFAULT NULL,
+  `shipId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -206,20 +273,19 @@ CREATE TABLE `weaponsmodel` (
   `defaultCharge` int(12) DEFAULT '0',
   `dispersion` int(12) DEFAULT '0',
   `width` int(12) DEFAULT NULL,
-  `state` int(12) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `weaponsmodel` WRITE;
 /*!40000 ALTER TABLE `weaponsmodel` DISABLE KEYS */;
 
-INSERT INTO `weaponsmodel` (`id`, `name`, `shortRange`, `mediumRange`, `longRange`, `defaultCharge`, `dispersion`, `width`, `state`)
+INSERT INTO `weaponsmodel` (`id`, `name`, `shortRange`, `mediumRange`, `longRange`, `defaultCharge`, `dispersion`, `width`)
 VALUES
-	(1,'Batterie laser de flancs',10,20,30,0,1,2,0),
-	(2,'Lance navale',30,60,90,0,0,1,0),
-	(3,'Lance navale lourde',30,60,90,3,0,3,1),
-	(4,'Mitrailleuses super lourdes de proximite',3,7,10,5,5,1,0),
-	(5,'Macro canon',10,20,30,0,3,2,0);
+	(1,'Batterie laser de flancs',10,20,30,0,1,2),
+	(2,'Lance navale',30,60,90,0,0,1),
+	(3,'Lance navale lourde',30,60,90,3,0,3),
+	(4,'Mitrailleuses super lourdes de proximite',3,7,10,5,5,1),
+	(5,'Macro canon',10,20,30,0,3,2);
 
 /*!40000 ALTER TABLE `weaponsmodel` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -234,22 +300,25 @@ CREATE TABLE `weaponsshipsrelations` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `weaponId` int(11) DEFAULT NULL,
   `shipId` int(11) DEFAULT NULL,
+  `posX` int(11) DEFAULT NULL,
+  `posY` int(11) DEFAULT NULL,
+  `orientation` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `weaponsshipsrelations` WRITE;
 /*!40000 ALTER TABLE `weaponsshipsrelations` DISABLE KEYS */;
 
-INSERT INTO `weaponsshipsrelations` (`id`, `weaponId`, `shipId`)
+INSERT INTO `weaponsshipsrelations` (`id`, `weaponId`, `shipId`, `posX`, `posY`, `orientation`)
 VALUES
-	(1,1,1),
-	(2,1,2),
-	(3,2,3),
-	(4,2,4),
-	(5,2,4),
-	(6,1,5),
-	(7,4,6),
-	(8,5,6);
+	(1,1,1,NULL,NULL,NULL),
+	(2,1,2,NULL,NULL,NULL),
+	(3,2,3,NULL,NULL,NULL),
+	(4,2,4,NULL,NULL,NULL),
+	(5,2,4,NULL,NULL,NULL),
+	(6,1,5,NULL,NULL,NULL),
+	(7,4,6,NULL,NULL,NULL),
+	(8,5,6,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `weaponsshipsrelations` ENABLE KEYS */;
 UNLOCK TABLES;
