@@ -2,33 +2,37 @@
 
 class Game
 {
-	private $gameId;
-	private $winnerId;
-	private $state;
-	private $playerTurn;
-	private $mapId;
-	private $bigTurn;
-	private $smallTurn;
+	private						$_gameId;
+	private						$_winnerId;
+	private						$_state;
+	private						$_playerTurn;
+	private						$_mapId;
+	private						$_bigTurn;
+	private						$_smallTurn;
 
-	public static init()
+	public static				create()
 	{
 		$map = new Map();
 		$map->GenerateMap();
+
 		DataBase::insert('maps', array(
 			"width" => 150,
 			"height" => 100,
-			"state" => 0);
-		$lastIdMap = Database::getLastEntry(""); // trouver dans la database le dernier element inserer
-		DataBase::insert('game', array(
+			"state" => 0
+		));
+
+		$lastIdMap = Database::getLastEntry('games'); // trouver dans la database le dernier element inserer
+		DataBase::insert('games', array(
 			"map_id" => $lastIdMap,
 			"winnerId" => 0,
 			"state" => 0,
-			"playerTurn" => $playerTurn,
-			"bigTurn" => $bigTurn,
-			"smallTurn" => $smallTurn));
+			"playerTurn" => 0,
+			"bigTurn" => 0,
+			"smallTurn" => 0
+		));
 	}
 
-	public function __construct(array $kwargs)
+	public function				__construct(array $kwargs)
 	{
 		if (isset($kwargs['gameId'])
 			&& isset($kwargs['winnerId'])
@@ -38,13 +42,13 @@ class Game
 			&& isset($kwargs['bigTurn'])
 			&& isset($kwargs['smallTurn']))
 		{
-			$gameId = $kwargs['gameId'];
-			$winnerId = $kwargs['winnerId'];
-			$state = $kwargs['state'];
-			$playerTurn = $kwargs['playerTurn'];
-			$mapId = $kwargs['mapId'];
-			$bigTurn = $kwargs['bigTurn'];
-			$smallTurn = $kwargs['smallTurn'];
+			$this->_gameId = $kwargs['gameId'];
+			$this->_winnerId = $kwargs['winnerId'];
+			$this->_state = $kwargs['state'];
+			$this->_playerTurn = $kwargs['playerTurn'];
+			$this->_mapId = $kwargs['mapId'];
+			$this->_bigTurn = $kwargs['bigTurn'];
+			$this->_smallTurn = $kwargs['smallTurn'];
 		}
 	}
 
