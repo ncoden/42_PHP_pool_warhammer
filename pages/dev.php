@@ -8,10 +8,13 @@ if (!isset($gameId))
 
 require_once('class/Api.class.php');
 $api = new Api();
+$api->gameLoad(array(
+	'gameId' => $gameId
+));
 
 ?>
 <pre>
 	<?php
-
+		var_dump($api->getReturn());
 	?>
 </pre>

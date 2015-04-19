@@ -8,6 +8,7 @@ class Ship extends Licorne
 	const						STATE_KILLED = 2;
 
 	private						$_id;
+	private						$_state;
 	private						$_round;
 	private						$_model;
 	private						$_player;
@@ -25,6 +26,7 @@ class Ship extends Licorne
 	public function				__construct(array $kwargs)
 	{
 		if (isset($kwargs['id'])
+			&& isset($kwargs['state'])
 			&& isset($kwargs['round'])
 			&& isset($kwargs['model'])
 			&& isset($kwargs['player'])
@@ -39,6 +41,7 @@ class Ship extends Licorne
 			&& isset($kwargs['weapons']))
 		{
 			$this->_id = intval($kwargs['id']);
+			$this->_state = intval($kwargs['state']);
 			$this->_round = intval($kwargs['round']);
 			$this->_model = intval($kwargs['model']);
 			$this->_player = intval($kwargs['player']);

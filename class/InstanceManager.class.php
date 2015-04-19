@@ -10,23 +10,15 @@ require_once('Element.class.php');
 
 abstract class InstanceManager
 {
-	private	static			$_instances;
-
-	public static function	init()
-	{
-		if (!isset($_instances))
-		{
-			self::$_instances = [
-				'games'				=> [],
-				'elements'			=> [],
-				'ships'				=> [],
-				'shipModels'		=> [],
-				'weapons'			=> [],
-				'weaponModels'		=> [],
-				'players'           => []
-			];
-		}
-	}
+	private	static			$_instances = [
+		'games'				=> [],
+		'elements'			=> [],
+		'ships'				=> [],
+		'shipModels'		=> [],
+		'weapons'			=> [],
+		'weaponModels'		=> [],
+		'players'           => []
+	];
 
 	public static function	getShip($id)
 	{
@@ -172,7 +164,7 @@ abstract class InstanceManager
 				'id' => $shipId,
 				'round' => $ship['bigTurn'],
 				'model' => $ship['idShipsModel'],
-				'player' => $ship['playerId'],
+				'player' => $ship['playerID'],
 				'posX' => $ship['posX'],
 				'posY' => $ship['posY'],
 				'orientation' => $ship['orientation'],
@@ -263,7 +255,7 @@ abstract class InstanceManager
 
 		foreach ($ships as $ship)
 		{
-			$weapons = DataBase::req('SELECT * FROM weapons WHERE shipId = ?', array($ship->_id));
+			$weapons = DataBase::req('SELECT * FROM weapons WHERE shipId = ?', array($ship->getId()));
 			foreach ($weapons as $weapon)
 			{
 				self::$_instances['weapons'][$weapon['id']] = new Weapon(array(
