@@ -142,7 +142,7 @@ abstract class InstanceManager
 			foreach ($value[`id`] as $weapon)
 				array_push($weaponsIds, $weapon[`id`]);
 			$ship = new Ship(array(
-				'id' => ,
+				'id' => $value['id'],
 				'model' => $value['idShipModel'],
 				'player' => $value['playerID'],
 				'posX' => $value['posX'],
