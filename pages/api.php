@@ -2,7 +2,9 @@
 
 require_once('class/Api.class.php');
 
-$return = Api::request($g_path[1], $_POST);
+$api = new Api();
+
+$return = $api->request($g_path[0], $_POST);
 echo (json_encode($return));
 
 ?>
