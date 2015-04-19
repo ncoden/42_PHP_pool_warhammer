@@ -73,11 +73,25 @@ function AJAX_game_refresh(gameid)
 
 function AJAX_ship_move(gameid, shipid, pp, rotation, movement)
 {
-	var returnstring = 
-	"";
-	/*
-	 <- events
-	 */
+	var datas = array(
+		0 => gameid,
+		1 => shipid,
+		2 => pp,
+		3 => rotation,
+		4 => movement);
+
+	$.ajax(
+	{
+	  url : 'api/ship/move',
+	  type: 'POST',
+	  error: function(response) {
+	      console.log("FAILURE " + gameid);
+	   },
+	  data : datas,
+	  success: function(response) {
+	       callback(response);}
+	}
+	);
 }
 
 function AJAX_ship_fire(gameid, shipid, pp, rotation, movement)

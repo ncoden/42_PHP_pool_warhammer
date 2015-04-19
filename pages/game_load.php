@@ -19,6 +19,20 @@ if (!isset($gameId))
 </head>
 
 <body onload="init();">
+<script> var gameId = <?php echo($gameId); ?>; </script>
+<div id="carrerouge" class="formu">
+<input placeholder="moteur" id="moteur">
+<input placeholder="arme" id="arme">
+<input placeholder="bouclier" id="bouclier">
+<select placeholder="rotation" id="rotation">
+	<option id="none">aucune</option>
+	<option id="gauche">gauche</option>
+	<option id="droite">droite</option>
+</select>
+<input placeholder="nombre de cases" type="number" id="number">
+<input type="submit" id="move" value="Se deplacer">
+<input type="submit" id="fire" value="Tirer">
+</div>
 <canvas id="Warhammer" width="1695" height="1000" style="background-color: grey;"></canvas>
 <script src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
 <script src="https://code.createjs.com/tweenjs-0.6.0.min.js"></script>
@@ -30,8 +44,6 @@ if (!isset($gameId))
 <script src="/resources/js/BoundingBoxHitTest.js" type="text/javascript"></script> 
 <script>
 
-
-  var gameId = <?php echo($gameId); ?>;
   var stage;
   var direction = "up";
   var tmpship;

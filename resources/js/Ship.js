@@ -42,6 +42,7 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
     this.shipContainer = new createjs.Container();
     
     var mship = this.ship;
+    var mid = this.id;
     var mshipcontainer = this.shipContainer;
     this.currotation = ship_rotation.RIGHT;
     this.mapX = startmapx;
@@ -107,9 +108,11 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
         {
             if (selectedship != 0)
             {
+                 selectedshipid = -1;
                 selectedship.shadow = 0;
                 selectedship = 0;
             }
+            selectedshipid = mid;
             selectedship = mship;
             text1.text = "NAME:  " + tmp.name;
             text2.text = "ENERGY";
