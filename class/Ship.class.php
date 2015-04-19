@@ -11,8 +11,6 @@ class Ship extends Licorne
 	private						$_round;
 	private						$_model;
 	private						$_player;
-	private						$_orientation;
-	private						$_moving;
 	private						$_pp;
 	private						$_speed;
 	private						$_hull;
@@ -128,6 +126,118 @@ class Ship extends Licorne
 			DataBase::update('ships', $this->_id, array('hull' => $this->_hull));
 		}
 		DataBase::update('ships', $this->_id, array('shield' => $this->_shield));
+	}
+
+	public function 			createShips($playerId)
+	{
+		$ship0 = array (
+			'idShipsModel' 	=> '0',
+			'playerId' 		=> $playerId,
+			'posX' 			=> '10',
+			'posY' 			=> '10',
+			'orientation' 	=> '0',
+			'moving' 		=> '0',
+			'pp' 			=> '0',
+			'hull' 			=> '0',
+			'shield' 		=> '0',
+			'state' 		=> '1',
+			'speed' 		=> '0',
+			'bigTurn' 		=> '0'
+			);
+		$ship1 = array (
+			'idShipsModel' 	=> '0',
+			'playerId' 		=> $playerId,
+			'posX' 			=> '20',
+			'posY' 			=> '10',
+			'orientation' 	=> '0',
+			'moving' 		=> '0',
+			'pp' 			=> '0',
+			'hull' 			=> '0',
+			'shield' 		=> '0',
+			'state' 		=> '1',
+			'speed' 		=> '0',
+			'bigTurn' 		=> '0'
+			);
+		$ship2 = array (
+			'idShipsModel' 	=> '0',
+			'playerId' 		=> $playerId,
+			'posX' 			=> '30',
+			'posY' 			=> '10',
+			'orientation' 	=> '0',
+			'moving' 		=> '0',
+			'pp' 			=> '0',
+			'hull' 			=> '0',
+			'shield' 		=> '0',
+			'state' 		=> '1',
+			'speed' 		=> '0',
+			'bigTurn' 		=> '0'
+			);
+		$ship3 = array (
+			'idShipsModel' 	=> '0',
+			'playerId' 		=> $playerId,
+			'posX' 			=> '10',
+			'posY' 			=> '20',
+			'orientation' 	=> '0',
+			'moving' 		=> '0',
+			'pp' 			=> '0',
+			'hull' 			=> '0',
+			'shield' 		=> '0',
+			'state' 		=> '1',
+			'speed' 		=> '0',
+			'bigTurn' 		=> '0'
+			);
+		$ship4 = array (
+			'idShipsModel' 	=> '0',
+			'playerId' 		=> $playerId,
+			'posX' 			=> '10',
+			'posY' 			=> '30',
+			'orientation' 	=> '0',
+			'moving' 		=> '0',
+			'pp' 			=> '0',
+			'hull' 			=> '0',
+			'shield' 		=> '0',
+			'state' 		=> '1',
+			'speed' 		=> '0',
+			'bigTurn' 		=> '0'
+			);
+		$ship5 = array (
+			'idShipsModel' 	=> '0',
+			'playerId' 		=> $playerId,
+			'posX' 			=> '30',
+			'posY' 			=> '30',
+			'orientation' 	=> '0',
+			'moving' 		=> '0',
+			'pp' 			=> '0',
+			'hull' 			=> '0',
+			'shield' 		=> '0',
+			'state' 		=> '1',
+			'speed' 		=> '0',
+			'bigTurn' 		=> '0'
+			);
+		DataBase::insert('ships', $ship0);
+		DataBase::insert('ships', $ship1);
+		DataBase::insert('ships', $ship2);
+		DataBase::insert('ships', $ship3);
+		DataBase::insert('ships', $ship4);
+		DataBase::insert('ships', $ship5);
+		$gameId = $this->_player->getGame();
+		$allShips = InstanceManager::getAllShips($gameId);
+		foreach ($allShips as $key => $ship) {
+			if ($ship['playerId'] == $playerId)
+			{
+				$shipModel = InstanceManager::getShipModel($ship['model']);
+				foreach ($shipModel['weapons'] as $key => $weapon)
+				{
+					$weaponData = array(
+						'idWeaponsModel' 	=> $weapon['id'],
+						'charge' 			=> '0',
+						'shipId' 			=> $ship['id']
+						);
+					DataBase::insert('weapons', $weaponData);
+				}				
+			}
+		}
+
 	}
 
 	public function				kill()
