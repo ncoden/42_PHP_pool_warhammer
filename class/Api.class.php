@@ -266,6 +266,45 @@ class Api
 		}
 	}
 
+	public function			shipMove(array $kwargs)
+	{
+		if (isset($datas['gameId'])
+			&& isset($datas['shipId']))
+		{
+			$gameId = $datas['gameId'];
+			$shipId = $datas['shipId'];
+			$ship = InstanceManager::getShip($shipId);
+			$model = InstanceManager::getShipModel($ship->getModel);
+			$movement = 0;
+
+			//$ship->active();
+
+			if ($ship->getMoving())
+				$movement = $model->getInerty();
+			if (isset($datas['movement']) && $datas['movement'] > $movement)
+				$movement = $datas['movement'];
+
+			if (isset($datas['rotation']))
+			{
+				if ($datas['rotation'] == 'gauche')
+					$ship->rotate(Ship::ROTATION_LEFT);
+				else if ($datas['rotation'] == 'droite')
+					$ship->rotate(Ship::ROTATION_RIGHT);
+			}
+			if ($movement > 0 && $ship->forward($movement))
+			{
+				if ($datas['movement'] == $model->getInerty())
+					$ship->stop();
+			}
+
+			EventManager::trigger($gameId, 'ship_moved', $shipId);
+
+			$this->gameRefresh(array(
+				'gameId' => $gameId,
+			));
+		}
+	}
+
 	public function			getReturn()
 	{
 		return ($this->_return);
