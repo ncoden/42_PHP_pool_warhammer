@@ -8,7 +8,7 @@ if (!isset($gameId))
 
 require_once('class/Api.class.php');
 $api = new Api();
-$api->gameLoad(array(
+$api->gameRefresh(array(
 	'gameId' => $gameId
 ));
 

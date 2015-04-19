@@ -217,7 +217,7 @@ class Api
 			return (FALSE);
 		$gameId = $datas['gameId'];
 
-		$events = EventManager::check();
+		$events = EventManager::check($gameId);
 
 		foreach ($events as $event)
 		{
