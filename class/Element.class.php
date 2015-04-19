@@ -6,6 +6,8 @@ class Element extends Licorne
 {
 	private						$_id; 
 	private						$_type;
+	private						$_width;
+	private						$_height;
 
 	public function				__construct(array $kwargs)
 	{
@@ -42,6 +44,10 @@ class Element extends Licorne
 	{
 		return $this->_map_id;
 	}
+
+	public function				getType()	{ return ($this->_type); }
+	public function				getWidth()	{ return ($this->_width); }
+	public function				getHeight()	{ return ($this->_height); }
 }
 
 

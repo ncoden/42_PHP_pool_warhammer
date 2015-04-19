@@ -25,6 +25,9 @@ class Player
 			$this->_user = $kwargs['user'];
 		}
 	}
+
+	public function				getId()		{ return ($this->_id); }
+	public function				getTeam()	{ return ($this->_team); }
 }
 
 ?>

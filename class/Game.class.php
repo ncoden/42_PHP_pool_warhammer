@@ -25,7 +25,7 @@ class Game
 		$lastIdMap = Database::getLastEntry('maps');
 
 		$map = new Map($lastIdMap);
-		$map->GenerateMap();
+		$map->GenerateMap($lastIdMap);
 
 		DataBase::insert('games', array(
 			'mapId' => $lastIdMap,
@@ -100,6 +100,11 @@ class Game
 		else
 			return (array(INGAME, 0));
 	}
+
+	public function				getState()		{ return ($this->_state); }
+	public function				getBigTurn()	{ return ($this->_bigTurn); }
+	public function				getSmallTurn()	{ return ($this->_smallTurn); }
+	public function				getWinnerId()	{ return ($this->_winnerId); }
 }
 
 ?>

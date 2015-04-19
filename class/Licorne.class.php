@@ -8,8 +8,6 @@ abstract class Licorne
 	private						$_moving;
 	private						$_posX;
 	private						$_posY;
-	private						$_height;
-	private						$_width;
 
 	public static function		doc()
 	{
@@ -159,8 +157,8 @@ abstract class Licorne
 		}
 	}
 
-	public function 			getWidth() { return ($this->_width);}
-	public function 			getHeight() { return ($this->_height);}
+	public function				getPosX()	{ return ($this->_posX); }
+	public function				getPosY()	{ return ($this->_posY); }
 }
 
 ?>

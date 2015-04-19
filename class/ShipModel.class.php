@@ -34,14 +34,25 @@ class ShipModel
 			$this->_width = intval($kwargs['width']);
 			$this->_height = intval($kwargs['height']);
 			$this->_sprite = $kwargs['sprite'];
-			$this->_default_pp = intval($kwargs['default_pp'];
+			$this->_default_pp = intval($kwargs['default_pp']);
 			$this->_default_hull = intval($kwargs['default_hull']);
 			$this->_default_shield = intval($kwargs['default_shield']);
 			$this->_inerty = intval($kwargs['inerty']);
 			$this->_speed = intval($kwargs['speed']);
-			$this->_weapons = intval($kwargs['weapons']);
+			$this->_weapons = $kwargs['weapons'];
 		}
 	}
+
+	public function				getId()			 	{ return ($this->_id); },
+	public function				getName()			{ return ($this->_name); },
+	public function				getWidth()			{ return ($this->_width); },
+	public function				getHeight()			{ return ($this->_height); },
+	public function				getSprite()			{ return ($this->_sprite); },
+	public function				getDefaultPp()		{ return ($this->_default_PP); },
+	public function				getDefaultHull()	{ return ($this->_default_hull); },
+	public function				getDefaultShield()	{ return ($this->_default_shield); },
+	public function				getInerty()			{ return ($this->_inerty); },
+	public function				getSpeed()			{ return ($this->_speed); },
 }
 
 ?>
