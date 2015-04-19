@@ -5,7 +5,6 @@ x.src = '/resources/js/Ajax.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 
 $(document).ready(function(){
-	console.log("totot");
 	$('#A').click(function(e) {
         console.log(e.pageX+ ' , ' + e.pageY);
         $('#carrerouge').css('display', 'inline');
