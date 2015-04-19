@@ -1,9 +1,13 @@
 var x = document.createElement('script');
+x.src = '/resources/js/Events.js';
+document.getElementsByTagName("head")[0].appendChild(x);
 x.src = '/resources/js/Map.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 x.src = 'https://code.createjs.com/tweenjs-0.6.0.min.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 x.src = 'https://code.createjs.com/easeljs-0.6.0.min.js';
+document.getElementsByTagName("head")[0].appendChild(x);
+x.src = 'https://code.createjs.com/soundjs-0.6.0.min.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 x.src = 'client/Utils.js';
 
@@ -21,10 +25,11 @@ var array_ships = [];
 
 
 
-function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthull, defaultshield, inerty, speed, startmapx, startmapy)
+function Ship (player, id, model, name, width, height, thesprite, defaultpp, defaulthull, defaultshield, inerty, speed, startmapx, startmapy)
 {
     this.tilex = 0;
     this.tiley = 0;
+    this.model = model;
     this.name = name;
     this.id = id;
     this.width = width;
@@ -43,6 +48,8 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
     
     var mship = this.ship;
     var mid = this.id;
+    var mmodel = this.model;
+    var mplayer = this.player;
     var mshipcontainer = this.shipContainer;
     this.currotation = ship_rotation.RIGHT;
     this.mapX = startmapx;
@@ -106,12 +113,16 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
         var tmp = this;
         this.shipContainer.addEventListener("click", function (event)
         {
+            if (selectedship == mship)
+                return;
             if (selectedship != 0)
             {
-                 selectedshipid = -1;
+                selectedshipid = -1;
                 selectedship.shadow = 0;
                 selectedship = 0;
             }
+
+
             selectedshipid = mid;
             selectedship = mship;
             text1.text = "NAME:  " + tmp.name;
@@ -133,7 +144,7 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
             {
                 selectedship.shadow = shadow2;
             }
-            
+            createjs.Sound.play(SHIP_ID_DATA[mmodel].split("/")[mplayer - 1]+ (Math.floor(Math.random() * 10) + 1));
         });
     }
 
@@ -158,10 +169,5 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
     {
         mystage.removeChild(this.shipContainer);
     }
-}
-
-function update_ships()
-{
-
 }
 

@@ -44,7 +44,7 @@ if (!isset($gameId))
 <script src="/resources/js/BoundingBoxHitTest.js" type="text/javascript"></script> 
 <script>
 
-  var stage;
+var stage;
   var direction = "up";
   var tmpship;
   function init()
@@ -53,14 +53,16 @@ if (!isset($gameId))
 	  stage.enableMouseOver(50);
 	  Events_init(stage);
 	  generateGrid(stage);
-	  generateText_Info(stage);
+	 
 	  tmpship = new Ship(1, 0, "test", 15, 8, 'a', 1,2,3,4,5, 0,0);
 	  tmpship.rendership(stage);
 	  tmpship.Makeclickable(stage);	 
+
 	  createjs.Ticker.setInterval(25);
 	  createjs.Ticker.setFPS(60);
 	  createjs.Ticker.addEventListener("tick", handleTick);
 	   AJAX_game_id(gameId);
+	   Event_Load_Sounds();
 	  function handleTick(event)
 	  {
 		  tmpship.setRotation(direction);
@@ -103,5 +105,6 @@ if (!isset($gameId))
 	}
   }
 </script>
+
 </body>
 </html>

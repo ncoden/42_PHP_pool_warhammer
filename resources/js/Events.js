@@ -1,4 +1,8 @@
 
+var x = document.createElement('script');
+x.src = 'https://code.createjs.com/soundjs-0.6.0.min.js';
+document.getElementsByTagName("head")[0].appendChild(x);
+
 var		FLAG_Setup_Ships = false;
 
 var		SHIP_ID_DATA =
@@ -10,6 +14,7 @@ var		SHIP_ID_DATA =
 	5 : "greyknights/tanks",
 	6 : "t/chaos_lord",
 };
+var		DIR_SOUND = "/resources/sounds/"
 
 var		MAP_SHIPS = [];
 var		stage;
@@ -19,6 +24,19 @@ function Events_init(thestage)
 	stage = thestage;
 }
 
+function Event_Load_Sounds()
+{
+	for (var key in SHIP_ID_DATA)
+	{
+		var res = SHIP_ID_DATA[key].split("/");
+		for (i = 1; i <= 10; i++)
+		{
+			createjs.Sound.registerSound(DIR_SOUND + res[0]+ i + ".mp3", res[0]+ i );
+			createjs.Sound.registerSound(DIR_SOUND + res[1]+ i + ".mp3", res[1]+ i );
+		}
+		
+	}
+}
 
 function Event_Clear_Map_Ships()
 {
@@ -56,10 +74,11 @@ function Events_Setup_Ships(shipmodels, ships)
 	{
 		for (var smkey in shipmodels)
 		{
-			if (shipmodels[smkey]['id'] == ships[skey]['id'])
+			if (shipmodels[smkey]['id'] == ships[skey]['model'])
 			{
 				var mship = new Ship(
 					ships[skey]['player'] + 1, 
+					shipmodels[smkey]['id'],
 					ships[skey]['id'],
 					shipmodels[smkey]['name'],
 					shipmodels[smkey]['width'] * 5,

@@ -90,6 +90,7 @@ $game_id = array (
 	"ships" => array(
 		array(
 			"id" => 1,
+			"model" => 1,
 			"player" => 1,
 			"posX" => 134,
 			"posY" => 62,
@@ -99,6 +100,8 @@ $game_id = array (
 			),
 				array(
 			"id" => 2,
+			"model" => 2,
+
 			"player" => 1,
 			"posX" => 134,
 			"posY" => 71,
@@ -108,6 +111,7 @@ $game_id = array (
 			),
 						array(
 			"id" => 3,
+			"model" => 3,
 			"player" => 1,
 			"posX" => 134,
 			"posY" => 85,
@@ -117,6 +121,7 @@ $game_id = array (
 			),
 								array(
 			"id" => 4,
+			"model" => 4,
 			"player" => 1,
 			"posX" => 135,
 			"posY" => 92,
@@ -126,6 +131,7 @@ $game_id = array (
 			),
 		array(
 			"id" => 5,
+			"model" => 5,
 			"player" => 1,
 			"posX" => 116,
 			"posY" => 82,
@@ -137,6 +143,7 @@ $game_id = array (
 			),
 		array(
 			"id" => 6,
+			"model" => 6,
 			"player" => 1,
 			"posX" => 116,
 			"posY" => 72,
@@ -148,6 +155,7 @@ $game_id = array (
 			),
 		array(
 			"id" => 1,
+			"model" => 1,
 			"player" => 0,
 			"posX" => 1,
 			"posY" => 1,
@@ -157,6 +165,7 @@ $game_id = array (
 			),
 				array(
 			"id" => 2,
+			"model" => 2,
 			"player" => 0,
 			"posX" => 23,
 			"posY" => 1,
@@ -166,6 +175,7 @@ $game_id = array (
 			),
 			array(
 			"id" => 3,
+			"model" => 3,
 			"player" => 0,
 			"posX" => 42,
 			"posY" => 1,
@@ -175,6 +185,7 @@ $game_id = array (
 			),
 			array(
 			"id" => 4,
+			"model" => 4,
 			"player" => 0,
 			"posX" => 1,
 			"posY" => 13,
@@ -184,6 +195,7 @@ $game_id = array (
 			),
 		array(
 			"id" => 5,
+				"model" => 5,
 			"player" => 0,
 			"posX" => 23,
 			"posY" => 13,
@@ -195,6 +207,7 @@ $game_id = array (
 			),
 				array(
 			"id" => 6,
+			"model" => 6,
 			"player" => 0,
 			"posX" => 1,
 			"posY" => 22,
