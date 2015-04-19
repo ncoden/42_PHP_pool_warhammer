@@ -89,7 +89,7 @@ var stage;
 	  }
 	  
 	 //  window.addEventListener('keydown', whatKey, true);
-	  // window.setInterval(AJAX_game_refresh, 2000);
+	   window.setInterval(AJAX_game_refresh, 2000);
   }
   function whatKey(event)
   {
