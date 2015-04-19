@@ -6,9 +6,14 @@ if (isset($g_path) && isset($g_path[1]))
 if (!isset($gameId))
 	header('Location: /');
 
-require_once('class/Map.class.php');
-
-$map = new Map();
-$map->GenerateMap($gameId);
+require_once('class/Api.class.php');
+$api = new Api();
 
 ?>
+<pre>
+	<?php
+		var_dump($api->gameRefresh(array(
+			'gameId' => $gameId
+		))); 
+	?>
+</pre>

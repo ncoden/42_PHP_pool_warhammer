@@ -41,6 +41,9 @@ class Api
 	}
 
 	public function 		join()
+	{
+		
+	}
 
 	public function			gameLoad(array $datas)
 	{
@@ -160,7 +163,9 @@ class Api
 			return (FALSE);
 		$gameId = intval($datas['id']);
 
-		
+		$events = EventManager::check($gameId);
+
+		return ($events);
 	}
 }
 
