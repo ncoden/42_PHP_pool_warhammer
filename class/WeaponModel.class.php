@@ -15,13 +15,13 @@ class WeaponModel
 		return (file_get_contents('./WeaponModel.doc.txt'));
 	}
 
-	public static function		__construct(array $kwargs)
+	public function		__construct(array $kwargs)
 	{
 		if (isset($kwargs['name']) 
 			&& isset($kwargs['short_range']) 
 			&& isset($kwargs['medium_range']) 
 			&& isset($kwargs['long_range']) 
-			&& isset($kwargs['charge_default']) 
+			&& isset($kwargs['default_charge']) 
 			&& isset($kwargs['dispersion']) 
 			&& isset($kwargs['width'])) 
 		{
@@ -36,7 +36,7 @@ class WeaponModel
 		return ;
 	}
 
-	public static function		__destruct()
+	public function		__destruct()
 	{
 		return ;
 	}

@@ -36,15 +36,81 @@ class Api
 			return (FALSE);
 		$gameId = $datas['id'];
 
-		return (array(
-			'game'			=> InstanceManager::getGame($gameId),
-			'elements'		=> InstanceManager::getAllElements($gameId),
-			'players'		=> InstanceManager::getAllPlayers($gameId),
-			'ship'			=> InstanceManager::getAllShip($gameId),
-			'shipModels' 	=> InstanceManager::getAllShipModels($gameId),
-			'weapons'		=> InstanceManager::getAllWeapons($gameId),
-			'weaponModels'	=> InstanceManager::getAllWeaponModels($gameId)
-		));
+		$return = array();
+
+		$game				= InstanceManager::getGame($gameId);
+		$players			= InstanceManager::getAllPlayers($gameId);
+		$elements			= InstanceManager::getAllElements($gameId);
+		$ships				= InstanceManager::getAllShips($gameId);
+		$shipModels			= InstanceManager::getAllShipModels($gameId);
+		$weapons			= InstanceManager::getAllWeapons($gameId);
+		$weaponModels		= InstanceManager::getAllWeaponModels($gameId);
+
+		$return = array();
+
+		$return['game'] = array(
+			'state' => $game->getState(),
+			'bigTurn' => $game->getBigTurn(),
+			'smallTurn' => $game->getSmallTurn(),
+			'winnerId' => $game->getWinnerId(),
+		);
+
+		$return['players'] = array();
+		foreach ($players as $player)
+		{
+			array_push($return['players'], array(
+				'id' => $player->getId(),
+				'team' => $player->getTeam(),
+			));
+		}
+
+		$return['elements'] = array();
+		foreach ($elements as $element)
+		{
+			array_push($return['elements'], array(
+				'type' => $element->getType(),
+				'posX' => $element->getPosX(),
+				'posY' => $element->getPosY(),
+				'width' => $element->getWidth(),
+				'height' => $element->getHeight(),
+			));
+		}
+
+		$return['ships'] = array();
+		foreach ($ships as $ship)
+		{
+			array_push($return['ships'], array(
+				'id' => $ship->getId(),
+				'player' => $ship->getPlayer(),
+				'model' => $ship->getModel(),
+				'posX' => $ship->getPosX(),
+				'posY' => $ship->getPosY(),
+				'hull' => $ship->getHull(),
+				'shield' => $ship->getShield(),
+				'active' => ($ship->getRound == $game->getBigRound)(),
+				'state' => $ship->getState(),
+				'weapons' => $ship->getWeapons(),
+			));
+		}
+
+		$return['shipModels'] = array();
+		foreach ($shipModels as $shipModel)
+		{
+			array_push($return['shipModels'], array(
+				'id' => $shipModel->getId(),
+				'name' => $shipModel->getName(),
+				'width' => $shipModel->getWidth(),
+				'height' => $shipModel->getHeight(),
+				'sprite' => $shipModel->getSprite(),
+				'defaultPP' => $shipModel->getDefaultPp(),
+				'defaultHull' => $shipModel->getDefaultHull(),
+				'defaultShield' => $shipModel->getDefaultShield(),
+				'inerty' => $shipModel->getInerty(),
+				'speed' => $shipModel->getSpeed(),
+			));
+		}
+
+		return ($return);
 	}
 
 	public function			request($request, array $datas)

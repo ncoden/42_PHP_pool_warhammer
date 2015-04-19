@@ -50,20 +50,21 @@ abstract class DataBase
 
 	public static function		select($table, $id, $values = NULL)
 	{
-		if (is_array($values)
-		&& $db = DataBase::connect())
+		if ($db = DataBase::connect())
 		{
 			// build the req
-			$req = 'SELECT ';
+			$sql = 'SELECT ';
 
 			if (is_array($values))
-				$req .= implode($values, ', ');
+				$sql .= implode($values, ', ');
 			else
-				$req .= '*';
-			$req .= ' FROM '.$table.' WHERE id = ?';
+				$sql .= '*';
+			$sql .= ' FROM '.$table.' WHERE id = ?';
 
 			// request !
-			return (DataBase::req($sql, array($id)));
+			$return = DataBase::req($sql, array($id));
+			if (isset($return[0]))
+				return ($return[0]);
 		}
 		return (FALSE);
 	}
@@ -119,7 +120,9 @@ abstract class DataBase
 		{
 			$req = $db->prepare($sql);
 			if ($req->execute(array_values($datas)))
+			{
 				return ($req->fetchAll(PDO::FETCH_ASSOC));
+			}
 		}
 		return (FALSE);
 	}

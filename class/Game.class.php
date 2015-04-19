@@ -25,7 +25,7 @@ class Game
 		$lastIdMap = Database::getLastEntry('maps');
 
 		$map = new Map($lastIdMap);
-		$map->GenerateMap();
+		$map->GenerateMap($lastIdMap);
 
 		DataBase::insert('games', array(
 			'mapId' => $lastIdMap,

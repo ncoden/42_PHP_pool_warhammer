@@ -13,13 +13,13 @@ class Weapon
 		return (file_get_contents('./Weapon.doc.txt'));
 	}
 
-	public static function		__construct(array $kwargs)
+	public function		__construct(array $kwargs)
 	{
 		if (isset($kwargs['posX'])
 			&& isset($kwargs['posY'])
 			&& isset($kwargs['charge'])
 			&& isset($kwargs['orientation'])
-			&& isset($kwargs['model'])
+			&& isset($kwargs['model']))
 		{
 			$this->_model = intval($kwargs['model']);
 			$this->_posY = intval($kwargs['posY']);
@@ -30,7 +30,7 @@ class Weapon
 		return ;
 	}
 
-	public static function		__destruct(array $kwargs)
+	public function		__destruct()
 	{
 		return ;
 	}
