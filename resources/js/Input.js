@@ -7,9 +7,15 @@ document.getElementsByTagName("head")[0].appendChild(x);
 $(document).ready(function(){
 	$('#A').click(function(e) {
         console.log(e.pageX+ ' , ' + e.pageY);
-        $('#carrerouge').css('display', 'inline');
-        $('#carrerouge').css('left', e.pageX);
-        $('#carrerouge').css('top', e.pageY);
+        if (selectedship != 0)
+		{
+			console.log(selectedship);
+			$("#carrerouge").css("display", "inline");
+			$('#carrerouge').css('left', e.pageX);
+        	$('#carrerouge').css('top', e.pageY);
+		}
+		else
+			$("#carrerouge").css("display", "none");
     });
     $('#move').click(function() {
         var engine = $('#moteur').val();
@@ -18,13 +24,12 @@ $(document).ready(function(){
 		var rotation = $("#rotation").val();
 		var move = $("#move").val();
 		var number = $("#number").val();
-		//$("#move").css("display", "none");
         console.log(engine);
 		console.log(weapon);
 		console.log(bouclier);
 		console.log(rotation);
 		var pp = new Array(engine, weapon, bouclier);
-		if (selectedshipid != -1)
+		if (selectedshipid != 0)
 		{
 			AJAX_ship_move(gameId, selectedshipid, pp, rotation, number);
 		}
