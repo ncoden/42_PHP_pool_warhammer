@@ -2,6 +2,7 @@
 
 class WeaponModel
 {
+	private						$_id;
 	private						$_name;
 	private						$_short_range;
 	private						$_medium_range;
@@ -17,7 +18,8 @@ class WeaponModel
 
 	public function		__construct(array $kwargs)
 	{
-		if (isset($kwargs['name']) 
+		if (isset($kwargs['id']) 
+			&& isset($kwargs['name']) 
 			&& isset($kwargs['short_range']) 
 			&& isset($kwargs['medium_range']) 
 			&& isset($kwargs['long_range']) 
@@ -25,6 +27,7 @@ class WeaponModel
 			&& isset($kwargs['dispersion']) 
 			&& isset($kwargs['width'])) 
 		{
+			$this->_id = intval($kwargs['id']);
 			$this->_name = $kwargs['name'];
 			$this->_short_range = intval($kwargs['short_range']);
 			$this->_medium_range = intval($kwargs['medium_range']);
@@ -36,10 +39,13 @@ class WeaponModel
 		return ;
 	}
 
-	public function		__destruct()
-	{
-		return ;
-	}
+	public function		getId()				{ return ($this->_id); }
+	public function		getName()			{ return ($this->_name); }
+	public function		getShortRange()		{ return ($this->_short_range); }
+	public function		getMediumRange()	{ return ($this->_medium_range); }
+	public function		getLongRange()		{ return ($this->_long_range); }
+	public function		getDispersion()		{ return ($this->_dispersion); }
+	public function		getWidth()			{ return ($this->_width); }
 }
 
 ?>

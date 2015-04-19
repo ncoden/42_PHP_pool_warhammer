@@ -110,6 +110,33 @@ class Api
 			));
 		}
 
+		$return['weapons'] = array();
+		foreach ($weapons as $weapon)
+		{
+			array_push($return['weapons'], array(
+				'id' => $weapon->getId(),
+				'model' => $weapon->getModel(),
+				'charge' => $weapon->getCharge(),
+				'rotation' => $weapon->getRotation(),
+				'posX' => $weapon->getposX(),
+				'posY' => $weapon->getposY()
+			));
+		}
+
+		$return['weaponModels'] = array();
+		foreach ($weaponModels as $weaponModel)
+		{
+			array_push($return['weaponModels'], array(
+				'id' => $weaponModel->getId(),
+				'name' => $weaponModel->getName(),
+				'shortRange' => $weaponModel->getShortRange(),
+				'mediumRange' => $weaponModel->getMediumRange(),
+				'longRange' => $weaponModel->getLongRange(),
+				'dispersion' => $weaponModel->getDispersion(),
+				'width' => $weaponModel->getWidth()
+			));
+		}
+
 		return ($return);
 	}
 
