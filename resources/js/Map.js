@@ -1,7 +1,4 @@
-
-
 var stage;
-
 var colors = ["DimGray", "LightSlateGray", "Green"];
 var selected = null;
 var squares = [];
@@ -15,6 +12,8 @@ var _mapoffset_Y = 0;
 
 var _map_text_x;
 var _map_text_y;
+
+console.log("MAP LOADED\n");
 /**
  *  Returns a random number between 0-2
  */
@@ -23,12 +22,9 @@ function getRandomNumber()
     return Math.floor(Math.random() * 3);
 }
  
-/**
- *  Generates a 10x10 grid with randomly colored rectangles.
- */
 function generateGrid(thestage)
 {
-    var bitmap = new createjs.Bitmap("../resource/bg/bg2.jpg");
+    var bitmap = new createjs.Bitmap("/resources/bg/bg2.jpg");
     bitmap.image.onload = function()
     {
           var originalW = bitmap.image.width;
@@ -43,7 +39,7 @@ function generateGrid(thestage)
     bitmap.x = _mapoffset_X;
     bitmap.y = _mapoffset_Y;
 
-     bitmap2 = new createjs.Bitmap("../resource/bg/taskbar.png");
+     bitmap2 = new createjs.Bitmap("/resources/bg/taskbar.png");
     bitmap2.image.onload = function()
     {
         var originalW = bitmap2.image.width;
