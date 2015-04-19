@@ -3,6 +3,9 @@ x.src = '/resources/js/Map.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 x.src = 'https://code.createjs.com/tweenjs-0.6.0.min.js';
 document.getElementsByTagName("head")[0].appendChild(x);
+x.src = 'https://code.createjs.com/easeljs-0.6.0.min.js';
+document.getElementsByTagName("head")[0].appendChild(x);
+x.src = 'client/Utils.js';
 
 var stage;
 var DIR_SHIP = "/resources/ships/";
@@ -91,7 +94,15 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
     	mystage.addChildAt(this.shipContainer, mystage.getNumChildren());
     }
 
-    
+    this.Makeclickable = function(mystage)
+    {
+        var shadow = new createjs.Shadow("#ff0000", 0, 0, 5);
+        var self = this;
+        this.shipContainer.addEventListener("click", function (event){
+            self.ship.shadow = shadow;
+        });
+    }
+
     this.setPos = function(posX, posY)
     {
     	this.shipContainer.x = posX - this.ship.regX + (mship.scaleX * mship.regX);
