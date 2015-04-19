@@ -6,6 +6,9 @@ require_once('class/EventManager.class.php');
 
 abstract class Licorne
 {
+	const						ROTATION_LEFT = 0;
+	const						ROTATION_RIGHT = 0;
+
 	private static				$_map;
 	private						$_moving;
 	private						$_orientation;
@@ -166,10 +169,23 @@ abstract class Licorne
 		DataBase::update('ships', $this->id, array('moving' => '0'));
 	}
 
-	public function 			rotate()
+	public function 			rotate($rotation)
 	{
-		$this->_orientation = 0;
-		DataBase::update('ships', $this->id, array('orientation' => '0'));
+		if ($rotation == self::ROTATION_LEFT)
+			$this->_orientation -= 90;
+		else if ($rotation == self::ROTATION_RIGHT)
+			$this->_orientation += 90;
+		if ($this->_orientation == 360);
+			$this->_orientation = 0;
+		DataBase::update('ships', $this->id, array('orientation' => $this->_orientation));
+	}
+
+	public function				forward($movement)
+	{
+		$this->moveTo(
+			$this->_posX + $movement * cos($this->_orientation),
+			$this->_posY + $movement * sin($this->_orientation)
+		);
 	}
 
 	public function				getPosX()			{ return ($this->_posX); }

@@ -15,10 +15,23 @@ if (!isset($gameId))
 	<link rel="stylesheet" href="/resources/css/index.css">
 	<link rel="stylesheet" href="/resources/css/signup.css">
 	<link rel="stylesheet" href="/resources/css/buttons_login.css">
+		<style>
+	input{
+		display: block;
+	}
+	.formu {
+		position: absolute;
+		width: 100px;
+		height: 150px;
+		/*background-color: #222; */
+		display: none; 
+	};
+	</style>
 	<title>MAP TEST</title>
 </head>
 
-<body onload="init();">
+<body id="A" onload="init();">
+<script src="//code.jquery.com/jquery-1.11.2.min.js"> </script>
 <script> var gameId = <?php echo($gameId); ?>; </script>
 <div id="carrerouge" class="formu">
 <input placeholder="moteur" id="moteur">
@@ -37,6 +50,7 @@ if (!isset($gameId))
 <script src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
 <script src="https://code.createjs.com/tweenjs-0.6.0.min.js"></script>
 <script src="https://code.createjs.com/soundjs-0.6.0.min.js"></script>
+<script src="/resources/js/Input.js" type="text/javascript"></script>
 <script src="/resources/js/Map.js" type="text/javascript"></script>
 <script src="/resources/js/Ship.js" type="text/javascript"></script>
 <script src="/resources/js/Ajax.js" type="text/javascript"></script>
@@ -54,9 +68,10 @@ var stage;
 	  Events_init(stage);
 	  generateGrid(stage);
 	 
-	  tmpship = new Ship(1, 0,1, "test", 15, 8, 'a', 1,2,3,4,5, 0,0);
-	  tmpship.rendership(stage);
-	  tmpship.Makeclickable(stage);	 
+	  //tmpship = new Ship(1, 0, 1, "test", 15, 8, 'a', 1,2,3,4,5, 0,0);
+
+	  //tmpship.rendership(stage);
+	  //tmpship.Makeclickable(stage);	 
 
 	  createjs.Ticker.setInterval(25);
 	  createjs.Ticker.setFPS(60);
