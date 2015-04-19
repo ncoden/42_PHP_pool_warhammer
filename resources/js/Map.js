@@ -13,6 +13,23 @@ var _mapoffset_Y = 0;
 var _map_text_x;
 var _map_text_y;
 
+var text1 = 0;
+var text2 = 0;
+var text3 = 0;
+var text4 = 0;
+var text5 = 0;
+var text6 = 0;
+var text7 = 0;
+var text8 = 0;
+var text8 = 0;
+var text9 = 0;
+var text10 = 0;
+var text11 = 0;
+var shadow1 = 0;
+var shadow2 = 0;
+var self = 0;
+var selectedship = 0;
+
 console.log("MAP LOADED\n");
 /**
  *  Returns a random number between 0-2
@@ -20,6 +37,71 @@ console.log("MAP LOADED\n");
 function getRandomNumber()
 {
     return Math.floor(Math.random() * 3);
+}
+
+function generateText_Info(thestage)
+{
+
+    text1 = new createjs.Text("", "13px Arial bold", "#0000FF");
+    text2 = new createjs.Text("", "#0000FF");
+    text3 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
+    text4 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
+    text5 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
+    text6 = new createjs.Text("", "#0000FF");
+    text7 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
+    text8 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
+    text9 = new createjs.Text("", "13px Arial bold", "#0000FF");
+    text10 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
+    text11 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
+    thestage.addChild(text1);
+    thestage.addChild(text2);
+    thestage.addChild(text3);
+    thestage.addChild(text4);
+    thestage.addChild(text5);
+    thestage.addChild(text6);
+    thestage.addChild(text7);
+    thestage.addChild(text8);
+    thestage.addChild(text9);
+    thestage.addChild(text10);
+    thestage.addChild(text11);
+    text1.textAlign = "left";
+    text1.x = 1525;
+    text1.y = 400;
+    text2.textAlign = "left";
+    text2.x = 1525;
+    text2.y = 415;
+    text3.textAlign = "left";
+    text3.x = 1525;
+    text3.y = 435;
+    text4.textAlign = "left";
+    text4.x = 1525;
+    text4.y = 450;
+    text5.textAlign = "left";
+    text5.x = 1525;
+    text5.y = 465;
+    text6.textAlign = "left";
+    text6.x = 1525;
+    text6.y = 485;
+    text7.textAlign = "left";
+    text7.x = 1525;
+    text7.y = 500;
+    text8.textAlign = "left";
+    text8.x = 1525;
+    text8.y = 515;
+    text9.textAlign = "left";
+    text9.x = 1525;
+    text9.y = 535;
+    text10.textAlign = "left";
+    text10.x = 1525;
+    text10.y = 560;
+    text11.textAlign = "left";
+    text11.x = 1525;
+    text11.y = 575;
+    text1.textBaseline = "alphabetic";
+    text1.textBaseline = "alphabetic";
+
+    shadow1 = new createjs.Shadow("#0000FF", 0, 0, 10);
+    shadow2 = new createjs.Shadow("#ff0000", 0, 0, 10);
 }
  
 function generateGrid(thestage)
@@ -37,18 +119,22 @@ function generateGrid(thestage)
     
     bitmap.addEventListener("click", function (event)
     {
-            self.ship.shadow = 0;
-            thestage.removeChild(text1);
-            thestage.removeChild(text2);
-            thestage.removeChild(text3);
-            thestage.removeChild(text4);
-            thestage.removeChild(text5);
-            thestage.removeChild(text6);
-            thestage.removeChild(text7);
-            thestage.removeChild(text8);
-            thestage.removeChild(text9);
-            thestage.removeChild(text10);
-            thestage.removeChild(text11);
+        if (selectedship != 0)
+        {
+            selectedship.shadow = 0;
+            selectedship = 0;
+        }
+        text1.text = "";
+            text2.text = "";
+            text3.text = "";
+            text4.text = "";
+            text5.text = "";
+            text6.text = "";
+            text7.text = "";
+            text8.text = "";
+            text9.text = "";
+            text10.text = "";
+            text11.text = "";
     });
 
     thestage.addChild(bitmap);
@@ -78,7 +164,7 @@ function generateGrid(thestage)
         _map_text_y.y = 690;
         _map_text_y.textBaseline = "alphabetic";
         stage.addChild(_map_text_y);
-
+        generateText_Info(stage);
     }    
     var square;
     var count = 0;
@@ -87,39 +173,9 @@ function generateGrid(thestage)
     square3.graphics.beginFill(colors[2]);
     square3.graphics.drawRect(0, 0, _map_tile_width, _map_tile_height);
     square3.alpha = 0.1;
-    if (!map_prebake_map)
-    {
-        var square1 = new createjs.Shape();
-        square1.graphics.beginFill(colors[0]);
-        square1.graphics.drawRect(0, 0, _map_tile_width, _map_tile_height);
-        var square2 = new createjs.Shape();
-        square2.graphics.beginFill(colors[1]);
-        square2.graphics.drawRect(0, 0, _map_tile_width, _map_tile_height);
-     
 
-        for (var x = 0; x < _map_width; x++)
-        {
-            for (var y = 0; y < _map_height; y++)
-            {
-               // var color = colors[count % 2];
-                if (count%2)
-                    square = square1.clone(true);
-                else
-                    square = square2.clone(true);
-                square.x = x * _map_tile_width;
-                square.y = y * _map_tile_height;
-               
-                square.alpha = 0.7;
-                stage.addChild(square);
-     
-                var id = square.x + "_" + square.y;
-                squares[id] = square;
-                count++;
-                if (y + 1 == _map_height)
-                    count--;
-            }
-        }
-    }
+ 
+    
   
 
     stage.addChild(square3);
@@ -133,14 +189,18 @@ function generateGrid(thestage)
                 square3.x = x;
                 square3.y = y;
                 square3.alpha = 1;
-                _map_text_x.text = "X: " + (x/_map_tile_width);
-                _map_text_y.text = "Y: " + (y/_map_tile_height);
+                if (typeof _map_text_x != 'undefined')
+                {
+                    _map_text_x.text = "X: " + (x/_map_tile_width);
+                    _map_text_y.text = "Y: " + (y/_map_tile_height);
+                }
+    
                 stage.update();
                 return;
             }
             square3.alpha = 0;
-    });
-   
+    }
+    );
 }
  
  

@@ -36,7 +36,7 @@ function AJAX_game_id(gameid)
 		data : datas,
 		success: function(response) 
 		{
-		   	PROCESS_game_id(response);
+		   	PROCESS_game_id(returnstring);
 		}
 	}
 );

@@ -1,7 +1,4 @@
 
-var x = document.createElement('script');
-x.src = '/resources/js/Ships.js';
-document.getElementsByTagName("head")[0].appendChild(x);
 var		FLAG_Setup_Ships = false;
 
 var		SHIP_ID_DATA =
