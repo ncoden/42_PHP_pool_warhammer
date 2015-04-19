@@ -40,9 +40,20 @@ class Api
 		return (FALSE);
 	}
 
-	public function 		join()
+	public function 		join($gameId)
 	{
-		
+		if (isset($_SESSION['userId']))
+		{
+			Database::insert('players', array(
+				'userId' => $_SESSION['userId'],
+				'gameId' => $gameId
+				));
+			$player = Database::getLastEntry('players');
+			$playerId = $player['id'];
+			Ship::CreateShips($playerId);
+		}
+		else
+			return (FALSE);
 	}
 
 	public function			gameLoad(array $datas)

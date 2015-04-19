@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.40)
 # Database: rush01
-# Generation Time: 2015-04-18 15:55:00 +0000
+# Generation Time: 2015-04-19 13:08:28 +0000
 # ************************************************************
 
 
@@ -36,6 +36,90 @@ CREATE TABLE `elements` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `elements` WRITE;
+/*!40000 ALTER TABLE `elements` DISABLE KEYS */;
+
+INSERT INTO `elements` (`id`, `type`, `x`, `y`, `width`, `height`, `mapId`)
+VALUES
+	(1,'3',9,99,20,40,2),
+	(2,'3',12,73,20,20,2),
+	(3,'3',17,95,20,40,2),
+	(4,'3',34,58,40,10,2),
+	(5,'3',40,98,10,30,2),
+	(6,'3',43,93,40,30,2),
+	(7,'3',44,64,20,30,2),
+	(8,'3',53,55,10,30,2),
+	(9,'3',56,99,40,10,2),
+	(10,'3',61,87,30,20,2),
+	(11,'3',69,15,30,40,2),
+	(12,'3',77,36,40,40,2),
+	(13,'3',87,64,30,20,2),
+	(14,'3',89,2,30,10,2),
+	(15,'3',98,82,20,10,2),
+	(16,'3',99,63,40,20,2),
+	(17,'3',105,44,20,20,2),
+	(18,'3',122,37,20,30,2),
+	(19,'3',123,11,40,30,2),
+	(20,'3',130,3,10,10,2),
+	(21,'3',146,25,30,10,2),
+	(22,'3',146,51,30,40,2),
+	(23,'3',14,56,40,10,NULL),
+	(24,'3',27,45,10,30,NULL),
+	(25,'3',33,26,30,30,NULL),
+	(26,'3',38,44,20,20,NULL),
+	(27,'3',45,95,30,40,NULL),
+	(28,'3',53,74,40,30,NULL),
+	(29,'3',55,93,10,20,NULL),
+	(30,'3',56,82,20,20,NULL),
+	(31,'3',57,59,40,20,NULL),
+	(32,'3',57,65,30,30,NULL),
+	(33,'3',73,69,40,10,NULL),
+	(34,'3',84,79,30,30,NULL),
+	(35,'3',90,65,40,40,NULL),
+	(36,'3',92,80,20,40,NULL),
+	(37,'3',98,13,10,20,NULL),
+	(38,'3',102,34,10,10,NULL),
+	(39,'3',106,82,20,10,NULL),
+	(40,'3',106,87,30,10,NULL),
+	(41,'3',107,22,30,20,NULL),
+	(42,'3',107,25,40,10,NULL),
+	(43,'3',107,68,20,40,NULL),
+	(44,'3',111,86,20,30,NULL),
+	(45,'3',117,69,20,40,NULL),
+	(46,'3',120,21,10,40,NULL),
+	(47,'3',120,52,40,20,NULL),
+	(48,'3',121,34,30,10,NULL),
+	(49,'3',124,49,40,30,NULL),
+	(50,'3',141,44,30,10,NULL),
+	(51,'3',145,59,10,40,NULL),
+	(52,'3',1,78,10,20,34),
+	(53,'3',1,86,10,30,34),
+	(54,'3',9,99,20,20,34),
+	(55,'3',19,83,30,20,34),
+	(56,'3',19,92,40,30,34),
+	(57,'3',25,79,40,20,34),
+	(58,'3',25,96,10,30,34),
+	(59,'3',26,33,20,10,34),
+	(60,'3',26,75,20,30,34),
+	(61,'3',28,50,10,10,34),
+	(62,'3',41,25,20,40,34),
+	(63,'3',66,67,40,40,34),
+	(64,'3',73,64,40,40,34),
+	(65,'3',73,78,30,40,34),
+	(66,'3',75,69,10,10,34),
+	(67,'3',78,19,30,10,34),
+	(68,'3',85,68,10,30,34),
+	(69,'3',87,86,40,20,34),
+	(70,'3',90,49,30,20,34),
+	(71,'3',91,42,40,10,34),
+	(72,'3',95,51,20,40,34),
+	(73,'3',103,89,10,20,34),
+	(74,'3',112,86,20,20,34),
+	(75,'3',115,97,30,20,34),
+	(76,'3',136,64,20,30,34);
+
+/*!40000 ALTER TABLE `elements` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table events
@@ -48,6 +132,7 @@ CREATE TABLE `events` (
   `gameId` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `data` int(11) DEFAULT NULL,
+  `timestamp` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -76,7 +161,9 @@ LOCK TABLES `games` WRITE;
 INSERT INTO `games` (`id`, `timestamp`, `winnerId`, `state`, `playerTurn`, `mapId`, `bigTurn`, `smallTurn`)
 VALUES
 	(1,NULL,0,0,0,31,0,0),
-	(2,NULL,0,0,0,32,0,0);
+	(2,NULL,0,0,0,32,0,0),
+	(3,NULL,0,0,0,33,0,0),
+	(4,NULL,0,0,0,34,0,0);
 
 /*!40000 ALTER TABLE `games` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -131,7 +218,9 @@ VALUES
 	(29,150,100,0),
 	(30,150,100,0),
 	(31,150,100,0),
-	(32,150,100,0);
+	(32,150,100,0),
+	(33,150,100,0),
+	(34,150,100,0);
 
 /*!40000 ALTER TABLE `maps` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -215,12 +304,12 @@ LOCK TABLES `shipsmodel` WRITE;
 
 INSERT INTO `shipsmodel` (`id`, `name`, `width`, `height`, `sprite`, `defaultPp`, `defaultHull`, `defaultShield`, `inertia`, `speed`, `category`)
 VALUES
-	(1,'Honorable Duty',1,4,NULL,10,5,0,4,15,'Fregate Imperiale'),
-	(2,'Sword of Absolution',1,3,NULL,10,4,0,3,18,'Destroyer Imperial'),
-	(3,'Hand Of The Emperor',1,4,NULL,10,5,0,4,15,'Fregate Imperial'),
-	(4,'Imperator Deus',2,7,NULL,12,8,2,5,10,'Cuirasse Imperial'),
-	(5,'Orktobre Roug',1,2,NULL,10,4,0,3,19,'Vesso d\'attak Ravajeur Ork'),
-	(6,'Ork\'N\'Roll',1,5,NULL,10,6,0,4,12,'Vesso d\'attak Explozeur Ork');
+	(1,'Honorable Duty',1,4,'a',10,5,0,4,15,'Fregate Imperiale'),
+	(2,'Sword of Absolution',1,3,'b',10,4,0,3,18,'Destroyer Imperial'),
+	(3,'Hand Of The Emperor',1,4,'c',10,5,0,4,15,'Fregate Imperial'),
+	(4,'Imperator Deus',2,7,'d',12,8,2,5,10,'Cuirasse Imperial'),
+	(5,'Orktobre Roug',1,2,'e',10,4,0,3,19,'Vesso d\'attak Ravajeur Ork'),
+	(6,'Ork\'N\'Roll',1,5,'f',10,6,0,4,12,'Vesso d\'attak Explozeur Ork');
 
 /*!40000 ALTER TABLE `shipsmodel` ENABLE KEYS */;
 UNLOCK TABLES;
