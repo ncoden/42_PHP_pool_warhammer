@@ -36,15 +36,15 @@ console.log("MAP LOADED\n");
 
 function generateText_Info(thestage)
 {
-    text1 = new createjs.Text("", "13px Arial bold", "#0000FF");
-    text2 = new createjs.Text("", "#0000FF");
+    text1 = new createjs.Text("", "13px Arial bold", "#fffafa");
+    text2 = new createjs.Text("", "11px Arial bold", "#cdc0b0");
     text3 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
     text4 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
     text5 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
-    text6 = new createjs.Text("", "#0000FF");
+    text6 = new createjs.Text("", "11px Arial bold","#cdc0b0");
     text7 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
     text8 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
-    text9 = new createjs.Text("", "13px Arial bold", "#0000FF");
+    text9 = new createjs.Text("", "13px Arial bold", "#fffafa");
     text10 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
     text11 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
     thestage.addChild(text1);
@@ -91,7 +91,7 @@ function generateText_Info(thestage)
     text11.textAlign = "left";
     text11.x = 1525;
     text11.y = 575;
- img_display_picture.x = 1600;
+ img_display_picture.x = 1615;
     img_display_picture.y = 415;
     text1.textBaseline = "alphabetic";
     text1.textBaseline = "alphabetic";
