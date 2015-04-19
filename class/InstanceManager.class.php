@@ -8,12 +8,13 @@ abstract class InstanceManager
 	{
 		if (!isset($_instances))
 		{
-			$_instances = [
+			self::$_instances = [
 				'games'				=> [],
 				'ships'				=> [],
 				'shipModels'		=> [],
 				'weapons'			=> [],
-				'weaponModels'		=> []
+				'weaponModels'		=> [],
+				'players'           => []
 			];
 		}
 	}
@@ -29,7 +30,7 @@ abstract class InstanceManager
 			foreach ($weapons as $weapon)
 				array_push($weaponsIds, $weapon['id']);
 
-			$_instances['ships'][$id] = new Ship(array(
+			self::$_instances['ships'][$id] = new Ship(array(
 				'id' => $id,
 				'model' => $ship['idShipModel'],
 				'player' => $ship['playerID'],
@@ -44,7 +45,22 @@ abstract class InstanceManager
 				'weapons' => $weaponsIds
 			));
 		}
-		return ($_instances['ships'][$id]);
+		return (self::$_instances['ships'][$id]);
+	}
+
+	public static function	getPlayers($id)
+	{
+		if (!isset(self::$_instances['players'][$id]))
+		{
+			$players = DataBase::select('players', $id);
+
+			self::$_instances['players'][$id] = new Ship(array(
+				'id' => $id,
+				'userId' => $players['userId'],
+				'gameId' => $players['gameId']
+			));
+		}
+		return (self::$_instances['players'][$id]);
 	}
 
 	public static function	getShipModel($id)
@@ -58,7 +74,7 @@ abstract class InstanceManager
 			foreach ($weaponModels as $weaponModel)
 				array_push($weaponsIds, $weaponModel['id']);
 
-			$_instances['shipModels'][$id] = new Ship(array(
+			self::$_instances['shipModels'][$id] = new Ship(array(
 				'id' => $id,
 				'name' => $shipModel['name'],
 				'width' => $shipModel['width'],
@@ -72,7 +88,7 @@ abstract class InstanceManager
 				'weapons' => $weaponModels
 			));
 		}
-		return ($_instances['shipModels'][$id]);
+		return (self::$_instances['shipModels'][$id]);
 	}
 
 	public static function	getWeapon($id)
@@ -80,13 +96,13 @@ abstract class InstanceManager
 		if (!isset(self::$_instances['weapons'][$id]))
 		{
 			$weapon = DataBase::select('weapons', $id);
-			$_instances['weapons'][$id] = new Weapon(array(
+			self::$_instances['weapons'][$id] = new Weapon(array(
 				'id' => $id,
 				'model' => $weapon['idWeaponModel'],
 				'charge' => $weapon['charge']
 			));
 		}
-		return ($_instances['weapons'][$id]);
+		return (self::$_instances['weapons'][$id]);
 	}
 
 	public static function	getWeaponModel($id)
@@ -94,7 +110,7 @@ abstract class InstanceManager
 		if (!isset(self::$_instances['weapons'][$id]))
 		{
 			$weaponModel = DataBase::select('weaponsmodel', $id);
-			$_instances['weaponModels'][$id] = new WeaponModel(array(
+			self::$_instances['weaponModels'][$id] = new WeaponModel(array(
 				'id' => $id,
 				'name' => $weaponModel['name'],
 				'short_range' => $weaponModel['shortRange'],
@@ -105,7 +121,7 @@ abstract class InstanceManager
 				'width' => $weaponModel['width']
 			));
 		}
-		return ($_instances['weaponModels'][$id]);
+		return (self::$_instances['weaponModels'][$id]);
 	}
 
 	public static function getGame($id)
@@ -113,7 +129,7 @@ abstract class InstanceManager
 		if (!isset(self::$_instances['games'][$id]))
 		{
 			$game = DataBase::select('games', $id);
-			$_instances['games'][$id] = new Game(array(
+			self::$_instances['games'][$id] = new Game(array(
 				'id' => $id,
 				'timestamp' => $game['timestamp'],
 				'winnerId' => $game['winnerId'],
@@ -125,24 +141,25 @@ abstract class InstanceManager
 
 			));
 		}
-		return ($_instances['games'][$id]);
+		return (self::$_instances['games'][$id]);
 	}
 
 	public static function getAllShips($gameId)
 	{
+		self::$_instances['ships'] = array();
 		$allShips = DataBase::req('SELECT * FROM `ships`
 			INNER JOIN `players` ON `ships`.`playerID` = `players`.`id`
-			INNER JOIN `weapons` ON `ships`.`id` = `weapons`.`shipId`
 			WHERE `players`.`gameId` = ?', array($gameId));
 
-		$tabShips = array();
 		foreach ($allShips as $key => $value)
 		{
+			$weapons = DataBase::req('SELECT * FROM weapons WHERE shipId = ?', array($value['id']));
 			$weaponsIds = array();
-			foreach ($value[`id`] as $weapon)
-				array_push($weaponsIds, $weapon[`id`]);
+			foreach ($weapons as $weapon)
+				array_push($weaponsIds, $weapon['id']);
+
 			$ship = new Ship(array(
-				'id' => ,
+				'id' => $value['id'],
 				'model' => $value['idShipModel'],
 				'player' => $value['playerID'],
 				'posX' => $value['posX'],
@@ -155,9 +172,62 @@ abstract class InstanceManager
 				'shield' => $value['shield'],
 				'weapons' => $weaponIds
 			));
-			array_push($tabShips, $ship);
+			self::$_instances['ships'][$value['id']] = $ship;
 		}
-		return ($tabShips);
+		return (self::$_instances['ships']);
+	}
+
+	public static function getAllPlayers($gameId)
+	{
+		self::$_instances['players'] = array();
+		$allPlayers = DataBase::req('SELECT * FROM `players`
+			INNER JOIN `games` ON `players`.`gameId` = `games`.`id`
+			WHERE `players`.`gameId` = ?', array($gameId));
+
+		foreach ($allPlayers as $key => $value)
+		{
+			$players = new Ship(array(
+				'id' => $value['id'],
+				'userId' => $value['userId'],
+				'gameId' => $value['gameId'],
+			));
+			self::$_instances['players'][$value['id']] = $players;
+		}
+		return (self::$_instances['players']);
+	}
+
+	public static function getAllShipModel($gameId)
+	{
+		self::$_instances['shipModels'] = array();
+		$allShipModel = DataBase::req('SELECT * FROM `shipsmodel`
+			INNER JOIN `ships` ON `ships`.`idShipsModel` = `shipsmodel`.`id`
+			INNER JOIN `players` ON `ships`.`playerID` = `players`.`id`
+			INNER JOIN `games` ON `players`.`gameId` = `games`.`id`
+			WHERE `games`.`id` = ?', array($gameId));
+
+		foreach ($allShipModel as $key => $value)
+		{
+			$shipModel = DataBase::select('shipsmodel', $id);
+			$weaponModels = DataBase::req('SELECT * FROM weaponsshipsrelations WHERE shipId = ?', array($id));
+
+		}
+	//	array_push($weaponsIds, $weaponModel['id']);
+
+		self::$_instances['shipModels'][$value['id']}] = new Ship(array(
+			'id' => $id,
+			'name' => $shipModel['name'],
+			'width' => $shipModel['width'],
+			'height' => $shipModel['height'],
+			'sprite' => $shipModel['sprite'],
+			'default_pp' => $shipModel['defaultPp'],
+			'default_hull' => $shipModel['defaultHull'],
+			'default_shiel' => $shipModel['defaultShield'],
+			'inerty' => $shipModel['inertia'],
+			'speed' => $shipModel['speed'],
+			'weapons' => $weaponModels
+		));
+		}
+		return (self::$_instances['shipModels'][$id]);
 	}
 }
 
