@@ -14,7 +14,7 @@ x.src = 'client/Utils.js';
 
 var stage;
 var DIR_SHIP = "/resources/ships/";
-
+var DIR_ICON = "/resources/icons/";
 var ship_rotation = {
     RIGHT : 0,
     DOWN : 1,
@@ -120,6 +120,8 @@ function Ship (player, id, model, name, width, height, thesprite, defaultpp, def
                 selectedshipid = -1;
                 selectedship.shadow = 0;
                 selectedship = 0;
+                        img_display_picture.removeAllChildren();
+
             }
 
 
@@ -144,6 +146,7 @@ function Ship (player, id, model, name, width, height, thesprite, defaultpp, def
             {
                 selectedship.shadow = shadow2;
             }
+            img_display_picture.addChild(new createjs.Bitmap(DIR_ICON + mplayer + "-" + mmodel + ".png"));
             createjs.Sound.play(SHIP_ID_DATA[mmodel].split("/")[mplayer - 1]+ (Math.floor(Math.random() * 10) + 1));
         });
     }

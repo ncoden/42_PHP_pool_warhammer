@@ -1,3 +1,5 @@
+
+
 var stage;
 var colors = ["DimGray", "LightSlateGray", "Green"];
 var selected = null;
@@ -9,10 +11,8 @@ var _map_tile_width = 10;
 var map_prebake_map = true;
 var _mapoffset_X = 0;
 var _mapoffset_Y = 0;
-
 var _map_text_x;
 var _map_text_y;
-
 var text1 = 0;
 var text2 = 0;
 var text3 = 0;
@@ -30,6 +30,7 @@ var shadow2 = 0;
 var self = 0;
 var selectedship = 0;
 var selectedshipid = 0;
+var img_display_picture = 0;
 console.log("MAP LOADED\n");
 /**
  *  Returns a random number between 0-2
@@ -96,6 +97,8 @@ function generateText_Info(thestage)
     text11.textAlign = "left";
     text11.x = 1525;
     text11.y = 575;
+    img_display_picture.x = 1600;
+    img_display_picture.y = 415;
     text1.textBaseline = "alphabetic";
     text1.textBaseline = "alphabetic";
 
@@ -106,6 +109,7 @@ function generateText_Info(thestage)
 function generateGrid(thestage)
 {
     var bitmap = new createjs.Bitmap("/resources/bg/bg2.jpg");
+    img_display_picture =  new createjs.Container();
     bitmap.image.onload = function()
     {
           var originalW = bitmap.image.width;
@@ -123,6 +127,8 @@ function generateGrid(thestage)
             selectedshipid = -1;
             selectedship.shadow = 0;
             selectedship = 0;
+                    img_display_picture.removeAllChildren();
+
         }
         text1.text = "";
             text2.text = "";
@@ -158,13 +164,14 @@ function generateGrid(thestage)
         _map_text_x.x = _map_width * _map_tile_width + 30;
         _map_text_x.y = 670;
         _map_text_x.textBaseline = "alphabetic";
-        stage.addChild(_map_text_x);
+        thestage.addChild(_map_text_x);
         _map_text_y = new createjs.Text("Y: 0.0", "15px Arial", "#ff7700");
         _map_text_y.x = _map_width * _map_tile_width + 30;
         _map_text_y.y = 690;
         _map_text_y.textBaseline = "alphabetic";
-        stage.addChild(_map_text_y);
+        thestage.addChild(_map_text_y);
         generateText_Info(stage);
+        thestage.addChild(img_display_picture);
     }    
     var square;
     var count = 0;
@@ -175,12 +182,9 @@ function generateGrid(thestage)
     square3.alpha = 0.1;
 
  
-    
-  
+    thestage.addChild(square3);
 
-    stage.addChild(square3);
-
-    stage.on("stagemousemove", function(evt) {
+    thestage.on("stagemousemove", function(evt) {
         var x = evt.stageX  -  (evt.stageX % _map_tile_width);
         var y = evt.stageY - ( evt.stageY % _map_tile_height);
         if (x < _map_width * _map_tile_width)
