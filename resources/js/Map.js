@@ -33,7 +33,6 @@ function generateGrid(thestage)
           var desiredH = _map_height * _map_tile_height;
           bitmap.scaleX = desiredW / originalW;
           bitmap.scaleY = desiredH / originalH;
-          
     }    
     thestage.addChild(bitmap);
     bitmap.x = _mapoffset_X;
@@ -117,8 +116,12 @@ function generateGrid(thestage)
                 square3.x = x;
                 square3.y = y;
                 square3.alpha = 1;
-                _map_text_x.text = "X: "+ x/_map_tile_width;
-                _map_text_y.text = "Y: "+ y/_map_tile_height;
+                if (typeof _map_text_x != 'undefined')
+                {
+                    _map_text_x.text = "X: "+ x/_map_tile_width;
+                    _map_text_y.text = "Y: "+ y/_map_tile_height;  
+                }
+ 
                 stage.update();
                 return;
             }

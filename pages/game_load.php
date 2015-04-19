@@ -71,7 +71,7 @@ if (!isset($gameId))
 		case 40:
 			direction = ship_rotation.DOWN;
 			 tmpship.tweenPos_Map(tmpship.mapX , tmpship.mapY + 5);
-			 AJAX_game_create("WEEDTEST");
+			 AJAX_game_id(gameId);
 			break;
 			// up arrow 
 		case 38:

@@ -79,6 +79,7 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
      	else if (therotation == ship_rotation.DOWN)
     	{
     		this.ship.rotation = 90;
+            
     	}
 		else if (therotation == ship_rotation.LEFT)
     	{
