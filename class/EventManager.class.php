@@ -16,7 +16,6 @@ abstract class EventManager
 
 	public static function			check($gameId)
 	{
-		var_dump($_SESSION['event_timestamps']);
 		if (!isset($_SESSION['event_timestamps']))
 			$_SESSION['event_timestamps'] = array();
 		if (!isset($_SESSION['event_timestamps'][$gameId]))

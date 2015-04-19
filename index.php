@@ -8,6 +8,7 @@ $g_pages = [
 
 	'home' =>			['',			'pages/home.php',		 	TRUE],
 	'login' =>			['login',		'pages/login.php',		 	TRUE],
+	'logout' =>			['logout',		'pages/logout.php',		 	TRUE],
 	'register' =>		['register',	'pages/register.php',		TRUE],
 	'game_create' =>	['game/create',	'pages/game_create.php',	TRUE],
 	'game_load' =>		['game/*',		'pages/game_load.php',		TRUE],
