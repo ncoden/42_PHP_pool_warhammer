@@ -30,6 +30,45 @@ class User
 		}
 	}
 
+	public static function		auth($login, $password)
+	{
+		$return = DataBase::req('SELECT * FROM users WHERE login = ? AND password = ?', array(
+			$login,
+			md5($_salt.$kwargs['password'])
+		));
+		if (isset($return[0]))
+		{
+			$_SESSION['userId'] = $return['id'];
+			$_SESSION['user'] = $return;
+			return (new User(($return[0])));
+		}
+		return (FALSE);
+	}
+
+	public static function		getAuth()
+	{
+		if (isset($_SESSION['user']))
+			return ($_SESSION['user'])
+		else
+			return (FALSE);
+	}
+
+	public static function		getAuthId()
+	{
+		if (isset($_SESSION['userId']))
+			return ($_SESSION['userId'])
+		else
+			return (FALSE);
+	}
+
+	public static function		isAuth()
+	{
+		if (isset($_SESSION['user']))
+			return (TRUE);
+		else
+			return (FALSE);
+	}
+
 	public function				__construct(array $kwargs)
 	{
 		if (isset($kwargs['id'])
