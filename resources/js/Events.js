@@ -86,7 +86,7 @@ function Events_Setup_Ships(shipmodels, ships)
 					shipmodels[smkey]['sprite'],
 					shipmodels[smkey]['defaultPP'],
 					shipmodels[smkey]['defaultHull'],
-					shipmodels[smkey]['defaultshield'],
+					shipmodels[smkey]['defaultShield'],
 					shipmodels[smkey]['inerty'],
 					shipmodels[smkey]['speed'],
 					ships[skey]['posX'],
