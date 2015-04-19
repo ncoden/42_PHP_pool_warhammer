@@ -1,5 +1,7 @@
 <?php
 
+require_once('class/Map.class.php');
+
 class Game
 {
 	private						$_gameId;
@@ -13,26 +15,29 @@ class Game
 	const						INGAME = 1;
 	const						GAME_FINISHED = 2;
 
-	public static				create()
+	public static function		create()
 	{
-		$map = new Map();
-		$map->GenerateMap();
-
 		DataBase::insert('maps', array(
 			'width' => 150,
 			'height' => 100,
 			'state' => 0
 		));
+		$lastIdMap = Database::getLastEntry('maps');
 
-		$lastIdMap = Database::getLastEntry('games'); // trouver dans la database le dernier element inserer
+		$map = new Map($lastIdMap);
+		$map->GenerateMap();
+
 		DataBase::insert('games', array(
-			'map_id' => $lastIdMap,
-			'winnerId' => null,
-			'state' => 1,
+			'mapId' => $lastIdMap,
+			'winnerId' => 0,
+			'state' => 0,
 			'playerTurn' => 0,
 			'bigTurn' => 0,
 			'smallTurn' => 0
 		));
+		$lastIdGame = Database::getLastEntry('games');
+
+		return ($lastIdGame);
 	}
 
 	public function				__construct(array $kwargs)
@@ -58,9 +63,9 @@ class Game
 	public function				checkEnd($id)
 	{
 		$allShip = InstanceManager::getAllShip($id);
-		var $fighter = 0;
-		var $check = 0;
-		var $id_winner = 0;
+		$fighter = 0;
+		$check = 0;
+		$id_winner = 0;
 
 		foreach ($allship as $key => $value)
 		{
@@ -91,7 +96,7 @@ class Game
 		if ($check == 0)
 			return (array(GAME_EQUAL, 0));
 		else if ($check == 1)
-			return (array(GAME_FINISHED, $winner_id))
+			return (array(GAME_FINISHED, $winner_id));
 		else
 			return (array(INGAME, 0));
 	}

@@ -13,9 +13,9 @@ abstract class DataBase
 		return (file_get_contents('DataBase.doc.txt'));
 	}
 
-	public function				__construct($kwargs = NULL)
+	public static function		connect($kwargs = NULL)
 	{
-		if ($_db != NULL
+		if (self::$_server != NULL
 			|| (is_array($kwargs) && self::init($kwargs)))
 		{
 			self::$_db = new PDO(
@@ -39,18 +39,18 @@ abstract class DataBase
 			&& isset($kwargs['password']))
 		{
 			self::$_server = $kwargs['server'];
-			self::$_server = $kwargs['name'];
-			self::$_server = $kwargs['username'];
-			self::$_server = $kwargs['password'];
+			self::$_name = $kwargs['name'];
+			self::$_username = $kwargs['username'];
+			self::$_password = $kwargs['password'];
 			return (TRUE);
 		}
 		else
 			return (FALSE);
 	}
 
-	public static function		select($table, $id, $values)
+	public static function		select($table, $id, $values = NULL)
 	{
-		if (is_array($args1)
+		if (is_array($values)
 		&& $db = DataBase::connect())
 		{
 			// build the req
@@ -100,8 +100,16 @@ abstract class DataBase
 				$sql .= ',?';
 			$sql .= ')';
 
-			return (DataBase::req($sql, array_values($values)));
+			return (DataBase::req($sql, array_values($datas)));
 		}
+		return (FALSE);
+	}
+
+	public static function		getLastEntry($table)
+	{
+		$return = DataBase::req('SELECT id FROM '.$table.' ORDER BY id DESC LIMIT 1');
+		if (isset($return[0]))
+			return ($return[0]['id']);
 		return (FALSE);
 	}
 
@@ -109,14 +117,9 @@ abstract class DataBase
 	{
 		if ($db = DataBase::connect())
 		{
-			$req = $db->prepare($req);
-			if ($db->execute(array_values($datas)))
-			{
-				$return = array();
-				while ($row = $req->fetch())
-					array_push($return, $row);
-				return ($return);
-			}
+			$req = $db->prepare($sql);
+			if ($req->execute(array_values($datas)))
+				return ($req->fetchAll(PDO::FETCH_ASSOC));
 		}
 		return (FALSE);
 	}
