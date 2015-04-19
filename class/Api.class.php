@@ -87,7 +87,7 @@ class Api
 				'posY' => $ship->getPosY(),
 				'hull' => $ship->getHull(),
 				'shield' => $ship->getShield(),
-				'active' => ($ship->getRound == $game->getBigRound)(),
+				'active' => ($ship->getRound() == $game->getBigRound()),
 				'state' => $ship->getState(),
 				'weapons' => $ship->getWeapons(),
 			));

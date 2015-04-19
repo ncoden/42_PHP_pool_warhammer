@@ -143,6 +143,15 @@ class Ship extends Licorne
 		// send the event
 		EventManager::trigger($gameId, 'ship_killed', $this->_id);
 	}
+
+	public function				getId()		{ return ($this->_id); }
+	public function				getPlayer()	{ return ($this->_player); }
+	public function				getModel()	{ return ($this->_model); }
+	public function				getHull()	{ return ($this->_hull); }
+	public function				getShield()	{ return ($this->_shield); }
+	public function				getRound()	{ return ($this->_round); }
+	public function				getState()	{ return ($this->_state); }
+	public function				getWeapons(){ return ($this->_weapons); }
 }
 
 ?>

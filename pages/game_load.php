@@ -58,6 +58,7 @@ echo "</pre>";
 <script src="client/Ship.js" type="text/javascript"></script> 
 <script src="client/BoundingBoxHitTest.js" type="text/javascript"></script> 
 <script>
+	var gameId = <?php echo($gameId); ?>;
 	var stage;
 	var direction = "up";
 		var tmpship;
