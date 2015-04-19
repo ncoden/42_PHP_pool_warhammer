@@ -42,6 +42,7 @@ if (!isset($gameId))
 	  generateGrid(stage);
 	  tmpship = new Ship(1, 0, "test", 15, 8, 'a', 1,2,3,4,5, 0,0);
 	  tmpship.rendership(stage);
+	  tmpship.Makeclickable(stage);
 	  createjs.Ticker.setInterval(25);
 	  createjs.Ticker.setFPS(60);
 	  createjs.Ticker.addEventListener("tick", handleTick);
