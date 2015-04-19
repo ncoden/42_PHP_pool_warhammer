@@ -1,5 +1,4 @@
 <?php
-
 if (isset($g_path) && isset($g_path[0]))
 	$gameId = intval($g_path[0]);
 
@@ -27,37 +26,47 @@ if (!isset($gameId))
 <script src="/resources/js/Map.js" type="text/javascript"></script>
 <script src="/resources/js/Ship.js" type="text/javascript"></script>
 <script src="/resources/js/Ajax.js" type="text/javascript"></script>
+<script src="/resources/js/Events.js" type="text/javascript"></script>
 <script src="/resources/js/BoundingBoxHitTest.js" type="text/javascript"></script> 
 <script>
 
 
-	var gameId = <?php echo($gameId); ?>;
+  var gameId = <?php echo($gameId); ?>;
   var stage;
   var direction = "up";
-	var tmpship;
+  var tmpship;
   function init()
   {
 	  var stage = new createjs.Stage("Warhammer");
 	  stage.enableMouseOver(50);
-
+	Events_init(stage);
 	  generateGrid(stage);
 	  tmpship = new Ship(1, 0, "test", 15, 8, 'a', 1,2,3,4,5, 0,0);
 	  tmpship.rendership(stage);
 	  tmpship.Makeclickable(stage);
+
+	  AJAX_game_id(gameId);
 	  createjs.Ticker.setInterval(25);
 	  createjs.Ticker.setFPS(60);
 	  createjs.Ticker.addEventListener("tick", handleTick);
 	  function handleTick(event)
 	  {
 		  tmpship.setRotation(direction);
-		  stage.update();
+
+			stage.update();
+			if (FLAG_Setup_Ships)
+			{
+				Event_Render_Map_Ships();
+				FLAG_Setup_Ships = false;
+			}
 	  }
 	  
 	   window.addEventListener('keydown', whatKey, true);  
   }
   function whatKey(event)
   {
-	switch (event.keyCode) {
+	switch (event.keyCode)
+	{
 		// left arrow
 		case 37:
 			direction = ship_rotation.LEFT;
@@ -72,7 +81,7 @@ if (!isset($gameId))
 		case 40:
 			direction = ship_rotation.DOWN;
 			 tmpship.tweenPos_Map(tmpship.mapX , tmpship.mapY + 5);
-			 AJAX_game_id(gameId);
+			 
 			break;
 			// up arrow 
 		case 38:
@@ -82,34 +91,5 @@ if (!isset($gameId))
 	}
   }
 </script>
-<?php
-session_start();
-include('Dice.class.php');
-include('Map.class.php');
-$boolarray = Array(false => 'false', true => 'true');
-
-//print Dice::toss()."\n";
-//var_dump(Dice::multi_toss(5));
-//print $boolarray[Dice::min_toss(3, 1)]."\n";
-  /*$m_game = new Map();
-  $m_game->GenerateMap();
-
-  $rendermode = 2;
-  if ($rendermode == 1)
-  {
-	  echo "<table class=\"myTable\" cellspacing=\"0\" cellpadding = \"0\">";
-	  $m_game->RenderMap();
-	  echo "</table>";
-  }
-  else
-  {
-	  echo "<div class=\"map_container\">";
-	  $m_game->RenderMap2();
-	  echo "</div>";
-  }*/
-
-?>
-
-
 </body>
 </html>

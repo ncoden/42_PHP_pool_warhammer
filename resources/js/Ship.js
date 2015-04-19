@@ -73,6 +73,10 @@ function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthul
         var y = _map_tile_height * startmapy + _mapoffset_Y;
         mshipcontainer.x = x - mship.regX + (mship.scaleX * mship.regX);
         mshipcontainer.y = y - mship.regY + (mship.scaleY * mship.regY);
+        if (player == 2)
+        {
+            mship.rotation = 180;
+        }
     }
     
     this.setPos_Map = function(gridX, gridY)
