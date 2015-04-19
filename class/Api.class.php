@@ -13,6 +13,34 @@ class Api
 		$this->_return = array();
 	}
 
+	private function		MakeRefArray($gameId, array $array)
+	{
+		$refs = array();
+
+		foreach ($array as $category => $instances)
+		{
+			if (!isset($refs[$category]))
+				$refs[$category] = array();
+			foreach ($instances as $instance)
+			{
+				if ($category == 'players')
+					$this->addPlayerToReturn($instance);
+				else if ($category == 'elements')
+					$this->addElementToReturn($instance);
+				else if ($category == 'ships')
+					$this->addShipToReturn($gameId, $instance);
+				else if ($category == 'shipModels')
+					$this->addShipModelToReturn($instance);
+				else if ($category == 'weapon')
+					$this->addWeaponToReturn($instance);
+				else if ($category == 'weaponModels')
+					$this->addWeaponModelToReturn($instance);
+				array_push($refs[$category], $instance->getId());
+			}
+		}
+		return ($refs);
+	}
+
 	private function		addToReturn($category, $data)
 	{
 		if (!isset($this->_return[$category]))
@@ -39,8 +67,9 @@ class Api
 		));
 	}
 
-	private function		addShipToReturn($game, $ship)
+	private function		addShipToReturn($gameId, $ship)
 	{
+		$game = InstanceManager::getGame($gameId);
 		$this->addToReturn('ships', array(
 			'id' => $ship->getId(),
 			'player' => $ship->getPlayer(),
@@ -188,22 +217,53 @@ class Api
 			return (FALSE);
 		$gameId = $datas['gameId'];
 
-		$return = array();
 		$events = EventManager::check();
 
 		foreach ($events as $event)
 		{
-			if ($event == 'game_start')
+			if ($event['name'] == 'game_start')
 			{
-				
+				$players			= InstanceManager::getAllPlayers($gameId);
+				$ships				= InstanceManager::getAllShips($gameId);
+				$weapons			= InstanceManager::getAllWeapons($gameId);
+
+				$datas = $this->makeRefArray($gameId, array(
+					'players' => $players,
+					'ships' => $ships,
+					'weapons' => $weapons
+				));
 			}
-			array_push($return, array(
+			else if ($event['name'] == 'game_end')
+			{
+				$game = InstanceManager::getGame($gameId);
+				$datas = array(
+					'winnerId' => $game->getWinnerId(),
+				);
+			}
+			else if ($event['name'] == 'ship_moved')
+			{
+				$ship = InstanceManager::getShip($event['data']);
+				$datas = array(
+					'posX' => $ship->getPosX(),
+					'posY' => $ship->getPosY(),
+					'orientation' => $ship->getOrientation(),
+					'moving' => $ship->getMoving(),
+				);
+			}
+			else if ($event['name'] == 'ship_damaged')
+			{
+				$ship = InstanceManager::getShip($event['data']);
+				$datas = array(
+					'shipId' => $ship->getId(),
+					'hull' => $ship->getHull(),
+				);
+			}
+
+			$this->addToReturn('events', array(
 				'name' => $event['name'],
 				'datas' => $datas
 			));
 		}
-
-		return ($return);
 	}
 
 	public function			getReturn()
