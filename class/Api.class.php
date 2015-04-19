@@ -6,22 +6,96 @@ require_once('class/User.class.php');
 
 class Api
 {
+	private					$_return;
+
 	public function			__construct()
 	{
-
+		$this->_return = array();
 	}
 
-	private function		checkPlayerRight($userId = NULL)
+	private function		addToReturn($category, $data)
 	{
-		//$game = InstanceManager::
-
+		if (!isset($this->_return[$category]))
+			$this->_return[$category] = array();
+		array_push($this->_return[$category], $data);
 	}
 
-	private function 		isPlayerLogged()
+	private function		addPlayerToReturn($player)
 	{
-		if (isset($_SESSION['id']))
-			return (1);
-		return(0);
+		$this->addToReturn('players', array(
+			'id' => $player->getId(),
+			'team' => $player->getTeam(),
+		));
+	}
+
+	private function		addElementToReturn($element)
+	{
+		$this->addToReturn('elements', array(
+			'type' => $element->getType(),
+			'posX' => $element->getPosX(),
+			'posY' => $element->getPosY(),
+			'width' => $element->getWidth(),
+			'height' => $element->getHeight(),
+		));
+	}
+
+	private function		addShipToReturn($game, $ship)
+	{
+		$this->addToReturn('ships', array(
+			'id' => $ship->getId(),
+			'player' => $ship->getPlayer(),
+			'model' => $ship->getModel(),
+			'posX' => $ship->getPosX(),
+			'posY' => $ship->getPosY(),
+			'orientation' => $ship->getOrientation(),
+			'moving' => $ship->getMoving(),
+			'hull' => $ship->getHull(),
+			'shield' => $ship->getShield(),
+			'active' => ($ship->getRound() == $game->getBigTurn()),
+			'state' => $ship->getState(),
+			'weapons' => $ship->getWeapons(),
+		));
+	}
+
+	private function		addShipModelToReturn($shipModel)
+	{
+		$this->addToReturn('shipModels', array(
+			'id' => $shipModel->getId(),
+			'name' => $shipModel->getName(),
+			'width' => $shipModel->getWidth(),
+			'height' => $shipModel->getHeight(),
+			'sprite' => $shipModel->getSprite(),
+			'defaultPP' => $shipModel->getDefaultPp(),
+			'defaultHull' => $shipModel->getDefaultHull(),
+			'defaultShield' => $shipModel->getDefaultShield(),
+			'inerty' => $shipModel->getInerty(),
+			'speed' => $shipModel->getSpeed(),
+		));
+	}
+
+	private function		addWeaponToReturn($weapon)
+	{
+		$this->addToReturn('weapons', array(
+			'id' => $weapon->getId(),
+			'model' => $weapon->getModel(),
+			'charge' => $weapon->getCharge(),
+			'orientation' => $weapon->getOrientation(),
+			'posX' => $weapon->getposX(),
+			'posY' => $weapon->getposY()
+		));
+	}
+
+	private function		addWeaponModelToReturn($weaponModel)
+	{
+		$this->addToReturn('weaponModels', array(
+			'id' => $weaponModel->getId(),
+			'name' => $weaponModel->getName(),
+			'shortRange' => $weaponModel->getShortRange(),
+			'mediumRange' => $weaponModel->getMediumRange(),
+			'longRange' => $weaponModel->getLongRange(),
+			'dispersion' => $weaponModel->getDispersion(),
+			'width' => $weaponModel->getWidth()
+		));
 	}
 
 	public function			request($request, array $datas)
@@ -45,14 +119,18 @@ class Api
 		if (isset($datas['name']))
 		{
 			$gameId = Game::create($datas['name']);
-			$this->gameJoin($gameId);
+			$this->gameJoin(array('gameId' => $gameId));
 			return ($gameId);
 		}
 		return (FALSE);
 	}
 
-	public function 		gameJoin($gameId)
+	public function 		gameJoin(array $datas)
 	{
+		if (!isset($datas['gameId']))
+			return (FALSE);
+		$gameId = $datas['gameId'];
+
 		$auth = User::getAuthId();
 		if ($auth)
 		{
@@ -69,9 +147,9 @@ class Api
 
 	public function			gameLoad(array $datas)
 	{
-		if (!isset($datas['id']))
+		if (!isset($datas['gameId']))
 			return (FALSE);
-		$gameId = $datas['id'];
+		$gameId = $datas['gameId'];
 
 		$return = array();
 
@@ -83,100 +161,54 @@ class Api
 		$weapons			= InstanceManager::getAllWeapons($gameId);
 		$weaponModels		= InstanceManager::getAllWeaponModels($gameId);
 
-		$return = array();
-
-		$return['game'] = array(
+		$this->_return['game'] = array(
 			'state' => $game->getState(),
 			'bigTurn' => $game->getBigTurn(),
 			'smallTurn' => $game->getSmallTurn(),
 			'winnerId' => $game->getWinnerId(),
 		);
 
-		$return['players'] = array();
 		foreach ($players as $player)
-		{
-			array_push($return['players'], array(
-				'id' => $player->getId(),
-				'team' => $player->getTeam(),
-			));
-		}
-
-		$return['elements'] = array();
+			$this->addPlayerToReturn($player);
 		foreach ($elements as $element)
-		{
-			array_push($return['elements'], array(
-				'type' => $element->getType(),
-				'posX' => $element->getPosX(),
-				'posY' => $element->getPosY(),
-				'width' => $element->getWidth(),
-				'height' => $element->getHeight(),
-			));
-		}
-
-		$return['ships'] = array();
+			$this->addElementToReturn($element);
 		foreach ($ships as $ship)
-		{
-			array_push($return['ships'], array(
-				'id' => $ship->getId(),
-				'player' => $ship->getPlayer(),
-				'model' => $ship->getModel(),
-				'posX' => $ship->getPosX(),
-				'posY' => $ship->getPosY(),
-				'orientation' => $weapon->getOrientation(),
-				'moving' => $weapon->getMoving(),
-				'hull' => $ship->getHull(),
-				'shield' => $ship->getShield(),
-				'active' => ($ship->getRound() == $game->getBigRound()),
-				'state' => $ship->getState(),
-				'weapons' => $ship->getWeapons(),
-			));
-		}
-
-		$return['shipModels'] = array();
+			$this->addShipToReturn($game, $ship);
 		foreach ($shipModels as $shipModel)
-		{
-			array_push($return['shipModels'], array(
-				'id' => $shipModel->getId(),
-				'name' => $shipModel->getName(),
-				'width' => $shipModel->getWidth(),
-				'height' => $shipModel->getHeight(),
-				'sprite' => $shipModel->getSprite(),
-				'defaultPP' => $shipModel->getDefaultPp(),
-				'defaultHull' => $shipModel->getDefaultHull(),
-				'defaultShield' => $shipModel->getDefaultShield(),
-				'inerty' => $shipModel->getInerty(),
-				'speed' => $shipModel->getSpeed(),
-			));
-		}
-
-		$return['weapons'] = array();
+			$this->addShipModelToReturn($shipModel);
 		foreach ($weapons as $weapon)
-		{
-			array_push($return['weapons'], array(
-				'id' => $weapon->getId(),
-				'model' => $weapon->getModel(),
-				'charge' => $weapon->getCharge(),
-				'orientation' => $weapon->getOrientation(),
-				'posX' => $weapon->getposX(),
-				'posY' => $weapon->getposY()
-			));
-		}
-
-		$return['weaponModels'] = array();
+			$this->addWeaponToReturn($weapon);
 		foreach ($weaponModels as $weaponModel)
+			$this->addWeaponModelToReturn($weaponModel);
+	}
+
+	public function			gameRefresh(array $datas)
+	{
+		if (!isset($datas['gameId']))
+			return (FALSE);
+		$gameId = $datas['gameId'];
+
+		$return = array();
+		$events = EventManager::check();
+
+		foreach ($events as $event)
 		{
-			array_push($return['weaponModels'], array(
-				'id' => $weaponModel->getId(),
-				'name' => $weaponModel->getName(),
-				'shortRange' => $weaponModel->getShortRange(),
-				'mediumRange' => $weaponModel->getMediumRange(),
-				'longRange' => $weaponModel->getLongRange(),
-				'dispersion' => $weaponModel->getDispersion(),
-				'width' => $weaponModel->getWidth()
+			if ($event == 'game_start')
+			{
+				
+			}
+			array_push($return, array(
+				'name' => $event['name'],
+				'datas' => $datas
 			));
 		}
 
 		return ($return);
+	}
+
+	public function			getReturn()
+	{
+		return ($this->_return);
 	}
 }
 
