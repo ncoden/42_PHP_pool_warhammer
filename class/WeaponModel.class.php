@@ -46,6 +46,7 @@ class WeaponModel
 	public function		getLongRange()		{ return ($this->_long_range); }
 	public function		getDispersion()		{ return ($this->_dispersion); }
 	public function		getWidth()			{ return ($this->_width); }
+	public function		getDefaultCharge()	{ return ($this->_default_charge); }
 }
 
 ?>

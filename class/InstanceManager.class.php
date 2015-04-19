@@ -84,17 +84,17 @@ abstract class InstanceManager
 				array_push($weaponsIds, $weaponModel['id']);
 
 			self::$_instances['shipModels'][$id] = new ShipModel(array(
-				'id' => $id,
+				'id' => $shipModel['id'],
 				'name' => $shipModel['name'],
 				'width' => $shipModel['width'],
 				'height' => $shipModel['height'],
 				'sprite' => $shipModel['sprite'],
 				'default_pp' => $shipModel['defaultPp'],
 				'default_hull' => $shipModel['defaultHull'],
-				'default_shiel' => $shipModel['defaultShield'],
+				'default_shield' => $shipModel['defaultShield'],
 				'inerty' => $shipModel['inertia'],
 				'speed' => $shipModel['speed'],
-				'weapons' => $weaponModels
+				'weapons' => $weaponsIds
 			));
 		}
 		return (self::$_instances['shipModels'][$id]);
@@ -162,15 +162,17 @@ abstract class InstanceManager
 
 		foreach ($allShips as $ship)
 		{
-			$weapons = DataBase::req('SELECT * FROM weapons WHERE shipId = ?', array($ship['id']));
-			$weaponsIds = array();
+			$shipId = intval($ship['id']);
+			$weapons = DataBase::req('SELECT * FROM weapons WHERE shipId = ?', array($shipId));
+			$weaponIds = array();
 			foreach ($weapons as $weapon)
-				array_push($weaponsIds, $weapon['id']);
+				array_push($weaponIds, intval($weapon['id']));
 
-			$ship = new Ship(array(
-				'id' => $ship['id'],
-				'model' => $ship['idShipModel'],
-				'player' => $ship['playerID'],
+			self::$_instances['ships'][$shipId] = new Ship(array(
+				'id' => $shipId,
+				'round' => $ship['bigTurn'],
+				'model' => $ship['idShipsModel'],
+				'player' => $ship['playerId'],
 				'posX' => $ship['posX'],
 				'posY' => $ship['posY'],
 				'orientation' => $ship['orientation'],
@@ -181,7 +183,6 @@ abstract class InstanceManager
 				'shield' => $ship['shield'],
 				'weapons' => $weaponIds
 			));
-			self::$_instances['ships'][$ship['id']] = $ship;
 		}
 		return (self::$_instances['ships']);
 	}
@@ -195,12 +196,11 @@ abstract class InstanceManager
 
 		foreach ($allPlayers as $player)
 		{
-			$players = new Ship(array(
+			self::$_instances['players'][$player['id']] = new Player(array(
 				'id' => $player['id'],
 				'userId' => $player['userId'],
 				'gameId' => $player['gameId'],
 			));
-			self::$_instances['players'][$player['id']] = $players;
 		}
 		return (self::$_instances['players']);
 	}
@@ -244,7 +244,7 @@ abstract class InstanceManager
 
 		foreach ($AllElements as $element)
 		{
-			$elements = new Element(array(
+			self::$_instances['elements'][$element['id']] = new Element(array(
 				'id' => $element['id'],
 				'type' => $element['type'],
 				'posX' => $element['x'],
@@ -252,7 +252,6 @@ abstract class InstanceManager
 				'width' => $element['width'],
 				'height' => $element['height'],
 			));
-			self::$_instances['elements'][$element['id']] = $elements;
 		}
 		return (self::$_instances['elements']);
 	}

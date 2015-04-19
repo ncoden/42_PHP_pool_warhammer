@@ -45,7 +45,7 @@ class User
 		var_dump($return);
 		if (isset($return[0]))
 		{
-			$_SESSION['userId'] = $return[0]['id'];
+			$_SESSION['userId'] = intval($return[0]['id']);
 			$_SESSION['user'] = $return[0];
 			return (new User(($return[0])));
 		}

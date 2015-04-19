@@ -2,6 +2,7 @@
 
 require_once('class/Game.class.php');
 require_once('class/InstanceManager.class.php');
+require_once('class/User.class.php');
 
 class Api
 {
@@ -27,6 +28,7 @@ class Api
 	{
 		$methods = [
 			'game/create' => 'gameCreate',
+			'game/join' => 'gameJoin',
 			'game/load' => 'gameLoad',
 			'game/refresh' => 'gameRefresh',
 			'ship/move' => 'shipMove',
@@ -41,21 +43,25 @@ class Api
 	public function 		gameCreate(array $datas)
 	{
 		if (isset($datas['name']))
-			return(Game::create($datas['name']));
+		{
+			$gameId = Game::create($datas['name']);
+			$this->gameJoin($gameId);
+			return ($gameId);
+		}
 		return (FALSE);
 	}
 
 	public function 		gameJoin($gameId)
 	{
-		if (isset($_SESSION['userId']))
+		$auth = User::getAuthId();
+		if ($auth)
 		{
 			Database::insert('players', array(
-				'userId' => $_SESSION['userId'],
+				'userId' => $auth,
 				'gameId' => $gameId
 				));
-			$player = Database::getLastEntry('players');
-			$playerId = $player['id'];
-			Ship::createShips($playerId);
+			$playerId = Database::getLastEntry('players');
+			Ship::createShips($gameId, $playerId);
 		}
 		else
 			return (FALSE);

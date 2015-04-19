@@ -33,7 +33,7 @@ class ShipModel
 			&& isset($kwargs['speed'])
 			&& isset($kwargs['weapons']))
 		{
-			$this->_name = intval($kwargs['id']);
+			$this->_id = intval($kwargs['id']);
 			$this->_name = $kwargs['name'];
 			$this->_width = intval($kwargs['width']);
 			$this->_height = intval($kwargs['height']);
@@ -57,6 +57,7 @@ class ShipModel
 	public function				getDefaultShield()	{ return ($this->_default_shield); }
 	public function				getInerty()			{ return ($this->_inerty); }
 	public function				getSpeed()			{ return ($this->_speed); }
+	public function				getWeapons()		{ return ($this->_weapons); }
 }
 
 ?>

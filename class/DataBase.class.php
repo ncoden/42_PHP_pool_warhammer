@@ -112,7 +112,7 @@ abstract class DataBase
 	{
 		$return = DataBase::req('SELECT id FROM '.$table.' ORDER BY id DESC LIMIT 1');
 		if (isset($return[0]))
-			return ($return[0]['id']);
+			return (intval($return[0]['id']));
 		return (FALSE);
 	}
 

@@ -1,5 +1,7 @@
 <?php
 
+require_once('class/Ship.class.php');
+require_once('class/Element.class.php');
 require_once('class/EventManager.class.php');
 
 abstract class Licorne
@@ -34,19 +36,19 @@ abstract class Licorne
 
 	public function				setPos($x, $y)
 	{
-		if ($this->_map === NULL)
+		if (self::$_map === NULL)
 		{
-			$this->_map = array('Ships' => array(), 'Elements' => array());
+			self::$_map = array('Ships' => array(), 'Elements' => array());
 		}
 
 		if (isset($x) && isset($y))
 		{
 			$this->_posX = $x;
 			$this->_posY = $y;
-			if (is_a($this, Ship) === TRUE)
-				$this->_map['Ships'][$this->_id] = $this;
-			if (is_a($this, Elements) === TRUE)
-				$this->_map['Elements'][$this->_id] = $this;
+			if (is_a($this, 'Ship') === TRUE)
+				self::$_map['Ships'][$this->getId()] = $this;
+			if (is_a($this, 'Elements') === TRUE)
+				self::$_map['Elements'][$this->getId()] = $this;
 		}
 	}
 
