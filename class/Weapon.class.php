@@ -23,7 +23,7 @@ class Weapon
 			&& isset($kwargs['orientation'])
 			&& isset($kwargs['model']))
 		{
-			$this->_id = intval($kwargs['id'])
+			$this->_id = intval($kwargs['id']);
 			$this->_model = intval($kwargs['model']);
 			$this->_posY = intval($kwargs['posY']);
 			$this->_posX = intval($kwargs['posX']);
@@ -43,10 +43,6 @@ class Weapon
 		$this->_charge = $tocharge;
 	}
 
-	public function				getCharge()
-	{
-		return ($this->_charge);
-	}
 	public function				getId()			{ return ($this->_id); }
 	public function				getModel()		{ return ($this->_model); }
 	public function				getCharge()		{ return ($this->_charge); }

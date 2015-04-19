@@ -30,6 +30,8 @@ class Api
 		return (FALSE);
 	}
 
+	public function 		join()
+
 	public function			gameLoad(array $datas)
 	{
 		if (!isset($datas['id']))
@@ -85,6 +87,8 @@ class Api
 				'model' => $ship->getModel(),
 				'posX' => $ship->getPosX(),
 				'posY' => $ship->getPosY(),
+				'orientation' => $weapon->getOrientation(),
+				'moving' => $weapon->getMoving(),
 				'hull' => $ship->getHull(),
 				'shield' => $ship->getShield(),
 				'active' => ($ship->getRound() == $game->getBigRound()),
@@ -117,7 +121,7 @@ class Api
 				'id' => $weapon->getId(),
 				'model' => $weapon->getModel(),
 				'charge' => $weapon->getCharge(),
-				'rotation' => $weapon->getRotation(),
+				'orientation' => $weapon->getOrientation(),
 				'posX' => $weapon->getposX(),
 				'posY' => $weapon->getposY()
 			));

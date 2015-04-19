@@ -52,7 +52,7 @@ class ShipModel
 	public function				getWidth()			{ return ($this->_width); }
 	public function				getHeight()			{ return ($this->_height); }
 	public function				getSprite()			{ return ($this->_sprite); }
-	public function				getDefaultPp()		{ return ($this->_default_PP); }
+	public function				getDefaultPp()		{ return ($this->_default_pp); }
 	public function				getDefaultHull()	{ return ($this->_default_hull); }
 	public function				getDefaultShield()	{ return ($this->_default_shield); }
 	public function				getInerty()			{ return ($this->_inerty); }

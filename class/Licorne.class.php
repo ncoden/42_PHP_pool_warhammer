@@ -6,6 +6,7 @@ abstract class Licorne
 {
 	private static				$_map;
 	private						$_moving;
+	private						$_orientation;
 	private						$_posX;
 	private						$_posY;
 
@@ -157,8 +158,22 @@ abstract class Licorne
 		}
 	}
 
-	public function				getPosX()	{ return ($this->_posX); }
-	public function				getPosY()	{ return ($this->_posY); }
+	public function 			stop()
+	{
+		$this->_moving = 0;
+		DataBase::update('ships', $this->id, array('moving' => '0'));
+	}
+
+	public function 			rotate()
+	{
+		$this->_orientation = 0;
+		DataBase::update('ships', $this->id, array('orientation' => '0'));
+	}
+
+	public function				getPosX()			{ return ($this->_posX); }
+	public function				getPosY()			{ return ($this->_posY); }
+	public function				getOrientation()	{ return ($this->_orientation); }
+	public function				getMoving()			{ return ($this->_moving); }
 }
 
 ?>
