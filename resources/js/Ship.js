@@ -1,11 +1,11 @@
 var x = document.createElement('script');
-x.src = 'client/Map.js';
+x.src = '/resources/js/Map.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 x.src = 'https://code.createjs.com/tweenjs-0.6.0.min.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 
 var stage;
-var DIR_SHIP = "../../resource/ships/";
+var DIR_SHIP = "/resources/ships/";
 
 var ship_rotation = {
     RIGHT : 0,
@@ -15,11 +15,6 @@ var ship_rotation = {
 }
 var array_ships = [];
 
-
-function generateGrid(thestage)
-{
-	stage = thestage;
-}
 
 
 function Ship (player, id, name, width, height, thesprite, defaultpp, defaulthull, defaultshield, inerty, speed, startmapx, startmapy)
