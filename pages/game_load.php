@@ -68,8 +68,8 @@ var stage;
 	  Events_init(stage);
 	  generateGrid(stage);
 	 
-	  //tmpship = new Ship(1, 0, 1, "test", 15, 8, 'a', 1,2,3,4,5, 0,0);
-	 // tmpship.rendership(stage);
+	//  tmpship = new Ship(1, 0, 1, "test", 15, 8, 'a', 1,2,3,4,5, 0,0);
+	  //tmpship.rendership(stage);
 	  //tmpship.Makeclickable(stage);	 
 
 	  createjs.Ticker.setInterval(25);
@@ -79,7 +79,6 @@ var stage;
 	   Event_Load_Sounds();
 	  function handleTick(event)
 	  {
-		  tmpship.setRotation(direction);
 
 			stage.update();
 			if (FLAG_Setup_Ships)
@@ -89,8 +88,8 @@ var stage;
 			}
 	  }
 	  
-	   window.addEventListener('keydown', whatKey, true);
-	   window.setInterval(AJAX_game_refresh, 2000);
+	 //  window.addEventListener('keydown', whatKey, true);
+	  // window.setInterval(AJAX_game_refresh, 2000);
   }
   function whatKey(event)
   {
