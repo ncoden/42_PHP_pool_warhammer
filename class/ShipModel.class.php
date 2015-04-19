@@ -2,6 +2,8 @@
 
 class ShipModel
 {
+	private 					$_id;
+	private 					$_name;
 	private						$_width;
 	private						$_height;
 	private						$_sprite;
@@ -19,7 +21,8 @@ class ShipModel
 
 	public function				__construct(array $kwargs)
 	{
-		if (isset($kwargs['name'])
+		if (isset($kwargs['id'])
+			&& isset($kwargs['name'])
 			&& isset($kwargs['width'])
 			&& isset($kwargs['height'])
 			&& isset($kwargs['sprite'])
@@ -30,6 +33,7 @@ class ShipModel
 			&& isset($kwargs['speed'])
 			&& isset($kwargs['weapons']))
 		{
+			$this->_name = intval($kwargs['id']);
 			$this->_name = $kwargs['name'];
 			$this->_width = intval($kwargs['width']);
 			$this->_height = intval($kwargs['height']);
@@ -43,16 +47,16 @@ class ShipModel
 		}
 	}
 
-	public function				getId()			 	{ return ($this->_id); },
-	public function				getName()			{ return ($this->_name); },
-	public function				getWidth()			{ return ($this->_width); },
-	public function				getHeight()			{ return ($this->_height); },
-	public function				getSprite()			{ return ($this->_sprite); },
-	public function				getDefaultPp()		{ return ($this->_default_PP); },
-	public function				getDefaultHull()	{ return ($this->_default_hull); },
-	public function				getDefaultShield()	{ return ($this->_default_shield); },
-	public function				getInerty()			{ return ($this->_inerty); },
-	public function				getSpeed()			{ return ($this->_speed); },
+	public function				getId()			 	{ return ($this->_id); }
+	public function				getName()			{ return ($this->_name); }
+	public function				getWidth()			{ return ($this->_width); }
+	public function				getHeight()			{ return ($this->_height); }
+	public function				getSprite()			{ return ($this->_sprite); }
+	public function				getDefaultPp()		{ return ($this->_default_PP); }
+	public function				getDefaultHull()	{ return ($this->_default_hull); }
+	public function				getDefaultShield()	{ return ($this->_default_shield); }
+	public function				getInerty()			{ return ($this->_inerty); }
+	public function				getSpeed()			{ return ($this->_speed); }
 }
 
 ?>
