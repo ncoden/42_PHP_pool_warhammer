@@ -1,5 +1,7 @@
 <IfModule mod_rewrite.c>
 
+Options -Multiviews
+
 RewriteEngine on
 RewriteCond %{REQUEST_URI} !^/resources/.*
 RewriteCond %{REQUEST_URI} !^/resources$

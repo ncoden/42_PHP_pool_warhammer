@@ -1,6 +1,7 @@
 <?php
-if (isset($g_path) && isset($g_path[1]))
-	$gameId = intval($g_path[1]);
+
+if (isset($g_path) && isset($g_path[0]))
+	$gameId = intval($g_path[0]);
 
 if (!isset($gameId))
 	header('Location: /');

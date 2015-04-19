@@ -29,7 +29,7 @@ class Api
 		];
 
 		if (isset($methods[$request]))
-			return(call_user_func('$this->'.$methods[$request], $datas));
+			return(call_user_func(array($this, $methods[$request]), $datas));
 		return (FALSE);
 	}
 

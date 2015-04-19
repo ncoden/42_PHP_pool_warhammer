@@ -1,14 +1,19 @@
 <?php
 
+function		simplematch($pattern, $string, &$result) {
+	return (preg_match("#^".strtr(preg_quote($pattern, '#'), array('\*' => '(.*)', '\?' => '.'))."$#i", $string, $result));
+}
+
 function		path_to_page($path, &$match)
 {
 	global		$g_pages;
 
 	foreach ($g_pages as $name => $page)
 	{
-		if (fnmatch($page[0], $path))
+		if (simplematch($page[0], $path, $result))
 		{
-			$match = array_filter(explode('/', $path));
+			array_shift($result);
+			$match = $result;
 			return ($name);
 		}
 	}
