@@ -101,8 +101,6 @@ abstract class DataBase
 				$sql .= ',?';
 			$sql .= ')';
 
-			var_dump($sql);
-			var_dump($datas);
 			$return = DataBase::req($sql, array_values($datas));
 			if ($return !== FALSE)
 				return (TRUE);

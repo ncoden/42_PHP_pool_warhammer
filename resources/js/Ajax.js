@@ -103,15 +103,24 @@ function	AJAX_parse_events(response)
 {
 	var obj = JSON.parse(response);
 
-	console.log(obj);
-
 	if (typeof(obj['events']) != 'undefined')
 	{
 		var events = obj['events'];
 		for (id in events)
 		{
 			var e = events[id];
-			console.log(e);
+			if (e.name == 'ship_moved')
+			{
+				if (MAP_SHIPS.length > 0)
+				{
+					for (i = 0; i < MAP_SHIPS.length ; i++)
+					{
+					
+						if (MAP_SHIPS[i].id == e.datas.shipId)
+							MAP_SHIPS[i].tweenPos_Map(e.datas.posX, e.datas.posY);
+					}
+				}
+			}
 		}
 	}
 }

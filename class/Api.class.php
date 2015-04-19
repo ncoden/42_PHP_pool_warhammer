@@ -245,6 +245,7 @@ class Api
 				{
 					$ship = InstanceManager::getShip($event['data']);
 					$datas = array(
+						'shipId' => $ship->getId(),
 						'posX' => $ship->getPosX(),
 						'posY' => $ship->getPosY(),
 						'orientation' => $ship->getOrientation(),
