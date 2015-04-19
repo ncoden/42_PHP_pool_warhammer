@@ -29,7 +29,7 @@ var shadow1 = 0;
 var shadow2 = 0;
 var self = 0;
 var selectedship = 0;
-
+var selectedshipid = 0;
 console.log("MAP LOADED\n");
 /**
  *  Returns a random number between 0-2
@@ -41,7 +41,6 @@ function getRandomNumber()
 
 function generateText_Info(thestage)
 {
-
     text1 = new createjs.Text("", "13px Arial bold", "#0000FF");
     text2 = new createjs.Text("", "#0000FF");
     text3 = new createjs.Text("", "11px Arial bold", "#BBBBBB");
@@ -121,6 +120,7 @@ function generateGrid(thestage)
     {
         if (selectedship != 0)
         {
+            selectedshipid = -1;
             selectedship.shadow = 0;
             selectedship = 0;
         }
