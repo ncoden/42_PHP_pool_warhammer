@@ -5,11 +5,6 @@ require_once('class/InstanceManager.class.php');
 
 class Api
 {
-	public function			__construct()
-	{
-
-	}
-
 	private function		checkPlayerRight($userId = NULL)
 	{
 		//$game = InstanceManager::
@@ -21,6 +16,21 @@ class Api
 		if (isset($_SESSION['id']))
 			return (1);
 		return(0);
+	}
+
+	public function			request($request, array $datas)
+	{
+		$methods = [
+			'game/create' => 'gameCreate',
+			'game/load' => 'gameLoad',
+			'game/refresh' => 'gameRefresh',
+			'ship/move' => 'shipMove',
+			'ship/fire' => 'shipFire',
+		];
+
+		if (isset($methods[$request]))
+			return(call_user_func('$this->'.$methods[$request], $datas));
+		return (FALSE);
 	}
 
 	public function 		gameCreate(array $datas)
@@ -48,9 +58,9 @@ class Api
 
 	public function			gameLoad(array $datas)
 	{
-		if (!isset($datas['id']))
+		if (!isset($datas['gameId']))
 			return (FALSE);
-		$gameId = $datas['id'];
+		$gameId = intval($datas['gameId']);
 
 		$return = array();
 
@@ -158,21 +168,16 @@ class Api
 		return ($return);
 	}
 
-	public function			request($request, array $datas)
+	public function			gameRefresh(array $datas)
 	{
-		$methods = [
-			'game/create' => 'gameCreate',
-			'game/load' => 'gameLoad',
-			'game/refresh' => 'gameRefresh',
-			'ship/move' => 'shipMove',
-			'ship/fire' => 'shipFire',
-		];
+		if (!isset($datas['gameId']))
+			return (FALSE);
+		$gameId = intval($datas['gameId']);
 
-		if (isset($methods[$request]))
-			return(call_user_func('$this->'.$methods[$request], $datas));
-		return (FALSE);
+		$events = EventManager::check($gameId);
+
+		return ($events);
 	}
-
 }
 
 ?>
