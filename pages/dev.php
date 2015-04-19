@@ -12,8 +12,6 @@ $api = new Api();
 ?>
 <pre>
 	<?php
-		var_dump($api->gameRefresh(array(
-			'gameId' => $gameId
-		))); 
+
 	?>
 </pre>

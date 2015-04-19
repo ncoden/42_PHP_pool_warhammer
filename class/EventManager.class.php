@@ -9,16 +9,18 @@ abstract class EventManager
 		return (DataBase::insert('events', array(
 			'gameId' => $gameId,
 			'name' => $event,
-			'data' => $data 
+			'data' => $data,
+			'timestamp' => time(),
 		)));
 	}
 
 	public static function			check($gameId)
 	{
+		var_dump($_SESSION['event_timestamps']);
 		if (!isset($_SESSION['event_timestamps']))
-			$_SESSION['event_timestamp'] = array();
+			$_SESSION['event_timestamps'] = array();
 		if (!isset($_SESSION['event_timestamps'][$gameId]))
-			$_SESSION['event_timestamp'][$gameId] = 0;
+			$_SESSION['event_timestamps'][$gameId] = 0;
 
 		$events = DataBase::req(
 			'SELECT * FROM `events` WHERE `gameId` = ? AND `timestamp` > ?',

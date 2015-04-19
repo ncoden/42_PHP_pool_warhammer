@@ -58,9 +58,9 @@ class Api
 
 	public function			gameLoad(array $datas)
 	{
-		if (!isset($datas['id']))
+		if (!isset($datas['gameId']))
 			return (FALSE);
-		$gameId = intval($datas['id']);
+		$gameId = intval($datas['gameId']);
 
 		$return = array();
 
@@ -170,9 +170,9 @@ class Api
 
 	public function			gameRefresh(array $datas)
 	{
-		if (!isset($datas['id']))
+		if (!isset($datas['gameId']))
 			return (FALSE);
-		$gameId = intval($datas['id']);
+		$gameId = intval($datas['gameId']);
 
 		$events = EventManager::check($gameId);
 
