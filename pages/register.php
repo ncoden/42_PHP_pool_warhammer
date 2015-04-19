@@ -6,10 +6,11 @@ if (isset($_POST['login'])
 	&& isset($_POST['password1'])
 	&& isset($_POST['password2']))
 {
-	if (User::create(array(
+	$return = User::create(array(
 		'login' => $_POST['login'],
 		'password' => $_POST['password1']
-	)))
+	));
+	if ($return)
 		header('Location: /login');
 }
 

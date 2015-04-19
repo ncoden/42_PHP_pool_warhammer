@@ -24,7 +24,7 @@ class User
 		{
 			$users = DataBase::req('SELECT login FROM users WHERE login = ?', array($kwargs['login']));
 
-			if (!$users || empty($users))
+			if (empty($users))
 			{
 				$return = DataBase::insert('users', array(
 					'login' => $kwargs['login'],
@@ -45,8 +45,8 @@ class User
 		var_dump($return);
 		if (isset($return[0]))
 		{
-			$_SESSION['userId'] = $return['id'];
-			$_SESSION['user'] = $return;
+			$_SESSION['userId'] = $return[0]['id'];
+			$_SESSION['user'] = $return[0];
 			return (new User(($return[0])));
 		}
 		return (FALSE);
