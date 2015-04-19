@@ -33,7 +33,9 @@ abstract class InstanceManager
 
 			self::$_instances['ships'][$id] = new Ship(array(
 				'id' => $id,
-				'model' => $ship['idShipModel'],
+				'state' => $ship['state'],
+				'round' => $ship['bigTurn'],
+				'model' => $ship['idShipsModel'],
 				'player' => $ship['playerID'],
 				'posX' => $ship['posX'],
 				'posY' => $ship['posY'],
@@ -162,6 +164,7 @@ abstract class InstanceManager
 
 			self::$_instances['ships'][$shipId] = new Ship(array(
 				'id' => $shipId,
+				'state' => $ship['state'],
 				'round' => $ship['bigTurn'],
 				'model' => $ship['idShipsModel'],
 				'player' => $ship['playerID'],

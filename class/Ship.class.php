@@ -54,6 +54,8 @@ class Ship extends Licorne
 			$this->_shield = intval($kwargs['shield']);
 			$this->_weapons = $kwargs['weapons'];
 		}
+		else
+			var_dump($kwargs);
 	}
 
 	public function				usePP(array $kwargs)

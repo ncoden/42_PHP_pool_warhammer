@@ -71,14 +71,14 @@ abstract class DataBase
 
 	public static function		update($table, $id, $values)
 	{
-		if (is_array($value)
+		if (is_array($values)
 		&& $db = DataBase::connect())
 		{
 			// build the req
-			$sql = 'UPDATE '.$table.' SET';
+			$sql = 'UPDATE '.$table.' SET ';
 			foreach ($values as $field => $value)
 				$sql .= $field.' = ?,';
-			$sql = substr($req, 0, -1);
+			$sql = substr($sql, 0, -1);
 			$sql .= 'WHERE id = ?';
 
 			// add the id in the argument list

@@ -266,15 +266,17 @@ class Api
 		}
 	}
 
-	public function			shipMove(array $kwargs)
+	public function			shipMove(array $datas)
 	{
 		if (isset($datas['gameId'])
 			&& isset($datas['shipId']))
 		{
 			$gameId = $datas['gameId'];
 			$shipId = $datas['shipId'];
+			InstanceManager::getAllShips($gameId);
+			InstanceManager::getAllElements($gameId);
 			$ship = InstanceManager::getShip($shipId);
-			$model = InstanceManager::getShipModel($ship->getModel);
+			$model = InstanceManager::getShipModel($ship->getModel());
 			$movement = 0;
 
 			//$ship->active();
