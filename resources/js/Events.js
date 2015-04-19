@@ -1,10 +1,8 @@
-
 var x = document.createElement('script');
-x.src = 'https://code.createjs.com/soundjs-0.6.0.min.js';
-document.getElementsByTagName("head")[0].appendChild(x);
+x.src = '/resources/js/Asteroid.js';
 
 var		FLAG_Setup_Ships = false;
-
+var		FLAG_Setup_Elements = false;
 var		SHIP_ID_DATA =
 {
 	1 : "assault/space_marine",
@@ -17,6 +15,7 @@ var		SHIP_ID_DATA =
 var		DIR_SOUND = "/resources/sounds/"
 
 var		MAP_SHIPS = [];
+var		MAP_ASTEROIDS = [];
 var		stage;
 
 function Events_init(thestage)
@@ -64,12 +63,9 @@ function Event_Render_Map_Ships()
 
 function Events_Setup_Ships(shipmodels, ships)
 {
+	FLAG_Setup_Ships = false;
 	Event_Clear_Map_Ships();
-	for (var key in shipmodels)
-	{
-  		if (shipmodels.hasOwnProperty(key)) 
-  			console.log(key + " -> " + shipmodels[key]);
-  	}
+
 	for (var skey in ships)
 	{
 		for (var smkey in shipmodels)
@@ -94,12 +90,52 @@ function Events_Setup_Ships(shipmodels, ships)
 				MAP_SHIPS.push(mship);
 			}
 		}
-  		//add sound ships[key]['id']
   	}
   	FLAG_Setup_Ships = true;
 }
 
-function Events_Load_Sounds()
+function Event_Clear_Map_Elements()
 {
+	if (MAP_ASTEROIDS.length > 0)
+	{
+		for (i = 0; i < MAP_ASTEROIDS.length ; i++)
+		{
+			MAP_ASTEROIDS[i].destroyship(stage);
+		}
+	}
+	MAP_ASTEROIDS = [];
+}
 
+function Event_Render_Map_Elements()
+{
+	if (MAP_ASTEROIDS.length > 0)
+	{
+		for (i = 0; i < MAP_ASTEROIDS.length ; i++)
+		{
+			MAP_ASTEROIDS[i].rendership(stage);
+		}
+	}
+}
+
+function Events_Setup_Elements(elements)
+{
+	FLAG_Setup_Elements = false;
+	var asteroidid = 0;
+	for (var key in elements)
+	{
+		console.log("elements" + key +  elements[key]['type']);
+  		if (elements[key]['type'] == 'asteroid')
+  		{
+  			var masteroid = new Asteroid(
+asteroidid,
+elements[key]['width'],
+elements[key]['height'],
+elements[key]['posX'],
+elements[key]['posY']
+  				);
+  			MAP_ASTEROIDS.push(masteroid);
+  			asteroidid++;
+  		}
+  	}
+  	FLAG_Setup_Elements = true;
 }

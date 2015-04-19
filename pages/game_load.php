@@ -55,6 +55,7 @@ if (!isset($gameId))
 <script src="/resources/js/Ship.js" type="text/javascript"></script>
 <script src="/resources/js/Ajax.js" type="text/javascript"></script>
 <script src="/resources/js/Events.js" type="text/javascript"></script>
+<script src="/resources/js/Asteroid.js" type="text/javascript"></script>
 <script src="/resources/js/BoundingBoxHitTest.js" type="text/javascript"></script> 
 <script>
 
@@ -85,6 +86,11 @@ var stage;
 			{
 				Event_Render_Map_Ships();
 				FLAG_Setup_Ships = false;
+			}
+			if (FLAG_Setup_Elements)
+			{
+				Event_Render_Map_Elements();
+				FLAG_Setup_Elements = false;
 			}
 	  }
 	  
@@ -119,6 +125,5 @@ var stage;
 	}
   }
 </script>
-
 </body>
 </html>

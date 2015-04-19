@@ -3,6 +3,8 @@ x.src = '/resources/js/Events.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 x.src = '/resources/js/Map.js';
 document.getElementsByTagName("head")[0].appendChild(x);
+x.src = '/resources/js/Asteroid.js';
+document.getElementsByTagName("head")[0].appendChild(x);
 x.src = 'https://code.createjs.com/tweenjs-0.6.0.min.js';
 document.getElementsByTagName("head")[0].appendChild(x);
 x.src = 'https://code.createjs.com/easeljs-0.6.0.min.js';
@@ -31,6 +33,10 @@ function Ship (player, id, model, name, width, height, thesprite, defaultpp, def
     this.tiley = 0;
     this.model = model;
     this.name = name;
+    if(name.indexOf('/') !== -1)
+    {
+        this.name = name.split('/')[player - 1];
+    }
     this.id = id;
     this.width = width;
     this.height = height;
