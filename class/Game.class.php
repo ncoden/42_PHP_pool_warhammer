@@ -36,7 +36,6 @@ class Game
 			'smallTurn' => 0
 		));
 		$lastIdGame = Database::getLastEntry('games');
-
 		return ($lastIdGame);
 	}
 
