@@ -5,6 +5,11 @@ require_once('class/InstanceManager.class.php');
 
 class Api
 {
+	public function			__construct()
+	{
+
+	}
+
 	private function		checkPlayerRight($userId = NULL)
 	{
 		//$game = InstanceManager::
@@ -40,7 +45,7 @@ class Api
 		return (FALSE);
 	}
 
-	public function 		join($gameId)
+	public function 		gameJoin($gameId)
 	{
 		if (isset($_SESSION['userId']))
 		{
@@ -50,7 +55,7 @@ class Api
 				));
 			$player = Database::getLastEntry('players');
 			$playerId = $player['id'];
-			Ship::CreateShips($playerId);
+			Ship::createShips($playerId);
 		}
 		else
 			return (FALSE);
@@ -58,9 +63,9 @@ class Api
 
 	public function			gameLoad(array $datas)
 	{
-		if (!isset($datas['gameId']))
+		if (!isset($datas['id']))
 			return (FALSE);
-		$gameId = intval($datas['gameId']);
+		$gameId = $datas['id'];
 
 		$return = array();
 
@@ -166,17 +171,6 @@ class Api
 		}
 
 		return ($return);
-	}
-
-	public function			gameRefresh(array $datas)
-	{
-		if (!isset($datas['gameId']))
-			return (FALSE);
-		$gameId = intval($datas['gameId']);
-
-		$events = EventManager::check($gameId);
-
-		return ($events);
 	}
 }
 
