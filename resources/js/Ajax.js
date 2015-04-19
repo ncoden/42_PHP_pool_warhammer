@@ -52,23 +52,27 @@ function AJAX_game_id(gameid)
 
 }
 
-function AJAX_game_refresh(gameid)
+function debug(response)
 {
-	console.log("AJAX_game_refresh " +  gameid);
-	  var datas= [];
-	  datas.push({"gameid": gameid});
-	$.ajax(
-	{
-	  url : '/api/game/refresh_test',
-	  type: 'POST',
-	  error: function(response) {
-	      console.log("FAILURE " + gameid);
-	   },
-	  data : datas,
-	  success: function(response) {
-	       callback(response);}
-	}
-	);
+	console.log(response);
+}
+
+function AJAX_game_refresh()
+{
+	var datas = {
+		'gameId': gameId
+	};
+
+	$.ajax({
+		url : '/api/game/refresh',
+		type: 'POST',
+		data : datas,
+		error: function(response) {
+			console.log("FAILURE " + gameid);
+		},
+		success: function(response) {
+			debug(response);}
+	});
 }
 
 function AJAX_ship_move(gameid, shipid, pp, rotation, movement)
