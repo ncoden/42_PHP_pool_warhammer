@@ -71,7 +71,7 @@ function AJAX_game_refresh()
 			console.log("FAILURE " + gameid);
 		},
 		success: function(response) {
-			debug(response);}
+			AJAX_parse_events(response);}
 	});
 }
 
@@ -94,9 +94,26 @@ function AJAX_ship_move(gameid, shipid, pp, rotation, movement)
 	   },
 	  data : datas,
 	  success: function(response) {
-	       callback(response);}
+	       AJAX_parse_events(response);}
 	}
 	);
+}
+
+function	AJAX_parse_events(response)
+{
+	var obj = JSON.parse(response);
+
+	console.log(obj);
+
+	if (typeof(obj['events']) != 'undefined')
+	{
+		var events = obj['events'];
+		for (id in events)
+		{
+			var e = events[id];
+			console.log(e);
+		}
+	}
 }
 
 

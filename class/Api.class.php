@@ -218,51 +218,53 @@ class Api
 		$gameId = $datas['gameId'];
 
 		$events = EventManager::check($gameId);
-
-		foreach ($events as $event)
+		if ($events)
 		{
-			if ($event['name'] == 'game_start')
+			foreach ($events as $event)
 			{
-				$players			= InstanceManager::getAllPlayers($gameId);
-				$ships				= InstanceManager::getAllShips($gameId);
-				$weapons			= InstanceManager::getAllWeapons($gameId);
+				if ($event['name'] == 'game_start')
+				{
+					$players			= InstanceManager::getAllPlayers($gameId);
+					$ships				= InstanceManager::getAllShips($gameId);
+					$weapons			= InstanceManager::getAllWeapons($gameId);
 
-				$datas = $this->makeRefArray($gameId, array(
-					'players' => $players,
-					'ships' => $ships,
-					'weapons' => $weapons
+					$datas = $this->makeRefArray($gameId, array(
+						'players' => $players,
+						'ships' => $ships,
+						'weapons' => $weapons
+					));
+				}
+				else if ($event['name'] == 'game_end')
+				{
+					$game = InstanceManager::getGame($gameId);
+					$datas = array(
+						'winnerId' => $game->getWinnerId(),
+					);
+				}
+				else if ($event['name'] == 'ship_moved')
+				{
+					$ship = InstanceManager::getShip($event['data']);
+					$datas = array(
+						'posX' => $ship->getPosX(),
+						'posY' => $ship->getPosY(),
+						'orientation' => $ship->getOrientation(),
+						'moving' => $ship->getMoving(),
+					);
+				}
+				else if ($event['name'] == 'ship_damaged')
+				{
+					$ship = InstanceManager::getShip($event['data']);
+					$datas = array(
+						'shipId' => $ship->getId(),
+						'hull' => $ship->getHull(),
+					);
+				}
+
+				$this->addToReturn('events', array(
+					'name' => $event['name'],
+					'datas' => $datas
 				));
 			}
-			else if ($event['name'] == 'game_end')
-			{
-				$game = InstanceManager::getGame($gameId);
-				$datas = array(
-					'winnerId' => $game->getWinnerId(),
-				);
-			}
-			else if ($event['name'] == 'ship_moved')
-			{
-				$ship = InstanceManager::getShip($event['data']);
-				$datas = array(
-					'posX' => $ship->getPosX(),
-					'posY' => $ship->getPosY(),
-					'orientation' => $ship->getOrientation(),
-					'moving' => $ship->getMoving(),
-				);
-			}
-			else if ($event['name'] == 'ship_damaged')
-			{
-				$ship = InstanceManager::getShip($event['data']);
-				$datas = array(
-					'shipId' => $ship->getId(),
-					'hull' => $ship->getHull(),
-				);
-			}
-
-			$this->addToReturn('events', array(
-				'name' => $event['name'],
-				'datas' => $datas
-			));
 		}
 	}
 

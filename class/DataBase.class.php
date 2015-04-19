@@ -79,7 +79,7 @@ abstract class DataBase
 			foreach ($values as $field => $value)
 				$sql .= $field.' = ?,';
 			$sql = substr($sql, 0, -1);
-			$sql .= 'WHERE id = ?';
+			$sql .= ' WHERE id = ?';
 
 			// add the id in the argument list
 			array_push($values, $id);
@@ -101,6 +101,8 @@ abstract class DataBase
 				$sql .= ',?';
 			$sql .= ')';
 
+			var_dump($sql);
+			var_dump($datas);
 			$return = DataBase::req($sql, array_values($datas));
 			if ($return !== FALSE)
 				return (TRUE);
