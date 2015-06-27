@@ -11,9 +11,9 @@ class Game
 	private						$_mapId;
 	private						$_bigTurn;
 	private						$_smallTurn;
-	const						GAME_EQUAL = 0;
-	const						INGAME = 1;
-	const						GAME_FINISHED = 2;
+	const						STATUS_EQUAL = 0;
+	const						STATUS_INGAME = 1;
+	const						STATUS_FINISHED = 2;
 
 	public static function		create()
 	{
@@ -93,11 +93,11 @@ class Game
 		}
 
 		if ($check == 0)
-			return (array(GAME_EQUAL, 0));
+			return (array(STATUS_EQUAL, 0));
 		else if ($check == 1)
-			return (array(GAME_FINISHED, $winner_id));
+			return (array(STATUS_FINISHED, $winner_id));
 		else
-			return (array(INGAME, 0));
+			return (array(STATUS_INGAME, 0));
 	}
 
 	public function				getState()		{ return ($this->_state); }
