@@ -4,23 +4,24 @@ $g_page_defaut = 'home';
 $g_page_nofound = '404';
 
 $g_pages = [
-	'api' =>			['api/*',		'pages/api.php',			FALSE],
+	'api' =>			['api/*',		'pages/api.php',			TRUE,	FALSE],
 
-	'home' =>			['',			'pages/home.php',		 	TRUE],
-	'login' =>			['login',		'pages/login.php',		 	TRUE],
-	'logout' =>			['logout',		'pages/logout.php',		 	TRUE],
-	'register' =>		['register',	'pages/register.php',		TRUE],
-	'game_create' =>	['game/create',	'pages/game_create.php',	TRUE],
-	'game_load' =>		['game/*',		'pages/game_load.php',		TRUE],
+	'home' =>			['',			'pages/home.php',		 	FALSE,	TRUE],
+	'login' =>			['login',		'pages/login.php',		 	FALSE,	TRUE],
+	'logout' =>			['logout',		'pages/logout.php',		 	TRUE,	TRUE],
+	'register' =>		['register',	'pages/register.php',		FALSE,	TRUE],
+	'game_create' =>	['game/create',	'pages/game_create.php',	TRUE,	TRUE],
+	'game_load' =>		['game/*',		'pages/game_load.php',		TRUE,	TRUE],
 
-	'404' =>			['404',			'pages/404.php',			TRUE],
-	'dev' =>			['dev/*',		'pages/dev.php',			TRUE],
+	'404' =>			['404',			'pages/404.php',			FALSE,	TRUE],
+	'dev' =>			['dev/*',		'pages/dev.php',			FALSE,	TRUE],
 ];
 
 // ----- INIT -----
 
 require('functions.php');
 require('class/DataBase.class.php');
+require('class/User.class.php');
 
 DataBase::init( array(
 	'server' => 'localhost',
@@ -47,6 +48,7 @@ if (isset($_GET['path']) && $_GET['path'] != '')
 $g_page_datas = array_combine([
 	'match',
 	'file',
+	'auth',
 	'header'
 ], $g_pages[$g_page]);
 
@@ -60,6 +62,9 @@ if (isset($_SESSION['user']))
 	$g_user = $_SESSION['user'];
 else
 	$_SESSION['user'] = NULL;
+
+if ($g_page_datas['auth'] && !User::isAuth())
+	redirect('/login');
 
 
 // ----- PAGE -----

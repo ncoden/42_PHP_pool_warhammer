@@ -1,5 +1,11 @@
 <?php
 
+function		redirect($path)
+{
+	header('Location: '.$path);
+	exit(0);
+}
+
 function		simplematch($pattern, $string, &$result) {
 	return (preg_match("#^".strtr(preg_quote($pattern, '#'), array('\*' => '(.*)', '\?' => '.'))."$#i", $string, $result));
 }
