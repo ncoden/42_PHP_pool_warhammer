@@ -51,16 +51,17 @@ abstract class InstanceManager
 		return (self::$_instances['ships'][$id]);
 	}
 
-	public static function	getPlayers($id)
+	public static function	getPlayer($id)
 	{
 		if (!isset(self::$_instances['players'][$id]))
 		{
 			$players = DataBase::select('players', $id);
 
-			self::$_instances['players'][$id] = new Ship(array(
+			self::$_instances['players'][$id] = new Player(array(
 				'id' => $id,
-				'userId' => $players['userId'],
-				'gameId' => $players['gameId']
+				'user' => $players['userId'],
+				'game' => $players['gameId'],
+				'team' => $players['team']
 			));
 		}
 		return (self::$_instances['players'][$id]);
@@ -99,9 +100,14 @@ abstract class InstanceManager
 		if (!isset(self::$_instances['weapons'][$id]))
 		{
 			$weapon = DataBase::select('weapons', $id);
+			$weapon_ship = DataBase::req('SELECT * FROM weaponsshipsrelations WHERE weaponId = ?', [$weapon['idWeaponsModel']]);
+			$weapon_ship = $weapon_ship[0];
 			self::$_instances['weapons'][$id] = new Weapon(array(
 				'id' => $id,
-				'model' => $weapon['idWeaponModel'],
+				'posX' => $weapon_ship['posX'],
+				'posY' => $weapon_ship['posY'],
+				'orientation' => $weapon_ship['orientation'],
+				'model' => $weapon['idWeaponsModel'],
 				'charge' => $weapon['charge']
 			));
 		}
@@ -150,13 +156,13 @@ abstract class InstanceManager
 	public static function getAllShips($gameId)
 	{
 		self::$_instances['ships'] = array();
-		$allShips = DataBase::req('SELECT * FROM `ships`
+		$allShips = DataBase::req('SELECT *, `ships`.`id` AS shipId FROM `ships`
 			INNER JOIN `players` ON `ships`.`playerID` = `players`.`id`
 			WHERE `players`.`gameId` = ?', array($gameId));
 
 		foreach ($allShips as $ship)
 		{
-			$shipId = intval($ship['id']);
+			$shipId = intval($ship['shipId']);
 			$weapons = DataBase::req('SELECT * FROM weapons WHERE shipId = ?', array($shipId));
 			$weaponIds = array();
 			foreach ($weapons as $weapon)

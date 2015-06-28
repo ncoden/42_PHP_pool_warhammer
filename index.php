@@ -11,7 +11,7 @@ $g_pages = [
 	'logout' =>			['logout',		'pages/logout.php',		 	TRUE,	TRUE],
 	'register' =>		['register',	'pages/register.php',		FALSE,	TRUE],
 	'game_create' =>	['game/create',	'pages/game_create.php',	TRUE,	TRUE],
-	'game_load' =>		['game/*',		'pages/game_load.php',		TRUE,	TRUE],
+	'game_load' =>		['game/*',		'pages/game_load.php',		TRUE,	FALSE],
 
 	'404' =>			['404',			'pages/404.php',			FALSE,	TRUE],
 	'dev' =>			['dev/*',		'pages/dev.php',			FALSE,	TRUE],
@@ -64,7 +64,7 @@ else
 	$_SESSION['user'] = NULL;
 
 if ($g_page_datas['auth'] && !User::isAuth())
-	redirect('/login');
+	redirect('/login?redirect='.$_SERVER['REQUEST_URI']);
 
 
 // ----- PAGE -----

@@ -148,7 +148,10 @@ class Api
 		if (isset($datas['name']))
 		{
 			$gameId = Game::create($datas['name']);
-			$this->gameJoin(array('gameId' => $gameId));
+			$this->gameJoin(array(
+				'gameId' => $gameId,
+				'team' => 0
+			));
 			return ($gameId);
 		}
 		return (FALSE);
@@ -156,7 +159,7 @@ class Api
 
 	public function 		gameJoin(array $datas)
 	{
-		if (!isset($datas['gameId']))
+		if (!isset($datas['gameId']) || !isset($datas['team']))
 			return (FALSE);
 		$gameId = $datas['gameId'];
 
@@ -165,8 +168,9 @@ class Api
 		{
 			Database::insert('players', array(
 				'userId' => $auth,
-				'gameId' => $gameId
-				));
+				'gameId' => $gameId,
+				'team' => $datas['team']
+			));
 			$playerId = Database::getLastEntry('players');
 			Ship::createShips($gameId, $playerId);
 		}

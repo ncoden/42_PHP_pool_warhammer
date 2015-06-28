@@ -10,8 +10,8 @@ abstract class Licorne
 	const						ROTATION_RIGHT = 0;
 
 	private static				$_map;
-	private						$_moving;
-	private						$_orientation;
+	protected					$_moving;
+	protected					$_orientation;
 	private						$_posX;
 	private						$_posY;
 
@@ -88,6 +88,7 @@ abstract class Licorne
 					{
 						$value->inflictDamages($value->getHull());
 						$this->inflictDamages($this->getHull());
+						$this->_moving = FALSE;
 						$stop = 1;
 						if ($ymin + $yi < 0)
 							$this->_posY = 0;
@@ -103,6 +104,7 @@ abstract class Licorne
 					if ($this->checkCollision($xmin, $ymin + $yi, $xmax, $ymax + $yi, $value) == TRUE)
 					{
 						$this->inflictDamages($value->getHull());
+						$this->_moving = FALSE;
 						$stop = 1;
 						if ($ymin + $yi < 0)
 							$this->_posY = 0;
@@ -132,6 +134,7 @@ abstract class Licorne
 					{
 						$value->inflictDamages($this->getHull());
 						$this->inflictDamages($value->getHull());
+						$this->_moving = FALSE;
 						$stop = 1;
 						if ($xmin + $xi < 0)
 							$this->_posX = 0;
@@ -147,6 +150,7 @@ abstract class Licorne
 					if ($this->checkCollision($xmin + $xi, $ymin, $xmax + $xi, $ymax, $value) == TRUE)
 					{
 						$this->inflictDamages($value->getHull());
+						$this->_moving = FALSE;
 						$stop = 1;
 					}
 					if ($xmin + $xi < 0)
@@ -188,10 +192,22 @@ abstract class Licorne
 			$this->_posX + $movement * cos($this->_orientation),
 			$this->_posY + $movement * sin($this->_orientation)
 		);
+		/*
 		DataBase::update('ships', $this->getId(), array(
 			'posX' => $this->_posX,
 			'posY' => $this->_posY
 		));
+		*/
+	}
+
+	public function				absPosX($x)
+	{
+		return ($this->_posX + $x * cos($this->_orientation));
+	}
+
+	public function				absPosY($y)
+	{
+		return ($this->_posY + $y * sin($this->_orientation));
 	}
 
 	public function				getPosX()			{ return ($this->_posX); }

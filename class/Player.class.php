@@ -28,6 +28,7 @@ class Player
 
 	public function				getId()		{ return ($this->_id); }
 	public function				getTeam()	{ return ($this->_team); }
+	public function				getGame()	{ return ($this->_game); }
 }
 
 ?>

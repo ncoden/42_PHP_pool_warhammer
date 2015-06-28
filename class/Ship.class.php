@@ -1,6 +1,7 @@
 <?php
 
 require_once('class/Licorne.class.php');
+require_once('class/Projectile.class.php');
 
 class Ship extends Licorne
 {
@@ -120,7 +121,7 @@ class Ship extends Licorne
 		if ($this->_shield < 0)
 		{
 			// if shield is destroyed, inflict others damages to hull
-			$this->$_hull += $this->_shield;
+			$this->_hull += $this->_shield;
 			$this->_shield = 0;
 			if ($this->_hull <= 0)
 			{
@@ -227,7 +228,8 @@ class Ship extends Licorne
 		DataBase::insert('ships', $ship5);
 
 		$allShips = InstanceManager::getAllShips($gameId);
-		foreach ($allShips as $key => $ship) {
+		foreach ($allShips as $key => $ship)
+		{
 			if ($ship->getPlayer() == $playerId)
 			{
 				$shipModel = InstanceManager::getShipModel($ship->getModel());
@@ -248,7 +250,8 @@ class Ship extends Licorne
 	public function				kill()
 	{
 		// get the game
-		$gameId = $this->_player->getGame();
+		$player = InstanceManager::getPlayer($this->_player);
+		$gameId = $player->getGame();
 		$game = InstanceManager::getGame($gameId);
 
 		// kill the ship
@@ -257,6 +260,34 @@ class Ship extends Licorne
 
 		// send the event
 		EventManager::trigger($gameId, 'ship_killed', $this->_id);
+	}
+
+	public function				fire($weaponId)
+	{
+		if (in_array($weaponId, $this->_weapons))
+		{
+			$weapon = InstanceManager::getWeapon($weaponId);
+			$model = InstanceManager::getWeaponModel($weapon->getModel());
+
+			// I know I should not call the same function in a loop,
+			// but the PHP didn't think it could be usefull to have
+			// read-only protected variables in a Class.
+			// So let's code as shit and wait for a better language !
+			//          (WOW, I am really saying that ? Such anger !)
+			for ($i = 0; $i < $model->getWidth(); $i++)
+			{
+				$projectile = new Projectile(array(
+					'count' => $weapon->getCharge(),
+					'dispersion_left' => ($model->getDispersion() & ($i == 0)),
+					'dispersion_right' => ($model->getDispersion() & ($i == ($model->getWidth() - 1))),
+					'posX' => $this->absPosX($i),
+					'posY' => $this->absPosY(1),
+					'orientation' => $weapon->getOrientation(),
+					'model' => $weapon->getModel()
+				));
+				$projectile->lanch();
+			}
+		}
 	}
 
 	public function				getId()		{ return ($this->_id); }

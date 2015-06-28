@@ -7,14 +7,14 @@ if (!isset($gameId))
 	header('Location: /');
 
 require_once('class/Api.class.php');
-$api = new Api();
-$api->gameRefresh(array(
-	'gameId' => $gameId
-));
+require_once('class/InstanceManager.class.php');
+
+$ship = InstanceManager::getShip(165);
+$ship->fire(10);
 
 ?>
 <pre>
 	<?php
-		var_dump($api->getReturn());
+		var_dump($ship);
 	?>
 </pre>

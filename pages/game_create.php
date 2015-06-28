@@ -12,7 +12,16 @@ if (isset($_POST['gameName']))
 }
 
 ?>
-<form action = "/game/create" method = "POST">
-	<input type = "text" name = "gameName"/>
-	<input type = "submit" value = "create"/>
-</form>
+<div class = "container">
+	<center>
+		<a href = "/">
+			<img src = "/resources/others/warhammer.png" class = "full-width"/>
+		</a>
+		<div class = "zone">
+			<form action = "/game/create" method = "POST">
+				Name: <input type = "text" name = "gameName"/><br/><br/>
+				<input type = "submit" value = "create"/>
+			</form>
+		</div>
+	</center>
+</div>

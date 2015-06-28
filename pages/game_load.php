@@ -27,7 +27,7 @@ if (!isset($gameId))
 		display: none; 
 	};
 	</style>
-	<title>MAP TEST</title>
+	<title>Warhammer - Game</title>
 </head>
 
 <body id="A" onload="init();">
